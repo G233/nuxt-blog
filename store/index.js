@@ -12,7 +12,8 @@ export const state = () => ({
   date: "",
   ishas: false
 });
-var marked = require("marked");
+// var marked = require("marked");
+
 export const mutations = {
   SET_USER(state, user) {
     state.authUser = user;
@@ -38,23 +39,29 @@ export const mutations = {
     state.lei = value;
   },
   changearticle(state, data) {
-    marked.setOptions({
-      renderer: new marked.Renderer(),
-      gfm: true,
-      tables: true,
-      breaks: true,
-      pedantic: false,
-      sanitize: false,
-      smartLists: true,
-      smartypants: false,
-      highlight: function (code) {
-        return require("highlight.js").highlightAuto(code).value;
-      }
-    });
 
-    console.log(data.istrue);
+    console.log(data);
     if (!data.istrue) {
-      state.content = marked(data.content);
+  
+      // state.content = marked(data.content);
+      var hljs = require('highlight.js');
+      var md = require('markdown-it')({
+        html: true,
+        linkify: true,
+        typographer: true,
+        highlight: function (str, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              return hljs.highlight(lang, str).value;
+            } catch (__) { }
+          }
+
+          return ''; // 使用额外的默认转义
+        }
+      });
+      state.content = md.render(data.content);
+ 
+      
     } else {
       state.content = data.content;
     }

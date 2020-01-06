@@ -25,6 +25,7 @@
     "koa-session": "^5.12.3",
     "koa-session-mongoose": "^2.0.5",
     "koa2-cors": "^2.0.6",
+    "markdown-it": "^10.0.0",
     "marked": "^0.7.0",
     "mavon-editor": "^2.7.6",
     "md5-node": "^1.0.1",
