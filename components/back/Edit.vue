@@ -1,52 +1,65 @@
 <template>
   <div style="width:100%">
-    <Row type="flex" justify="space-around" class-name="edit-title">
-      <Col offset="5" span="12">
-        <Input v-model="title" size="large" placeholder="请输入标题"></Input>
-      </Col>
-      <Col span="2">
-        <Icon
-          v-if="ishas"
-          style="cursor: pointer"
-          size="30"
-          color="red"
-          type="ios-trash-outline"
-          @click="modal=true"
-        />
-      </Col>
-    </Row>
+    <div style="  margin-bottom:40px">
+      <Row type="flex" justify="center" class-name="edit-title">
+        <Col span="12" style="font-weight:bold">
+          <Input v-model="title" size="large" placeholder="请输入标题"></Input>
+        </Col>
+      </Row>
+      <Row class-name="lan" type="flex" justify="space-around">
+        <Col span="">
+          <Input
+            v-if="!switchs"
+            v-model="lei"
+            placeholder="请输入新建类别"
+            style="width: 200px"
+          />
+          <Select
+            v-else
+            v-model="lei"
+            clearable
+            style="width:200px"
+            @on-open-change="refresh"
+          >
+            <Option
+              v-for="item in leiList"
+              :key="item._id"
+              :value="item.name"
+              >{{ item.name }}</Option
+            >
+          </Select>
+        </Col>
+        <Col>
+          <Icon type="md-add" size="25" :class="add" @click="addlei" />
+        </Col>
+        <Col>
+          <Button type="primary" @click="commit">{{ btntext }}</Button>
+        </Col>
+        <Col>
+          <Button v-if="ishas" @click="modal = true" type="error">删除</Button>
+        </Col>
+      </Row>
+    </div>
     <Row>
       <Col>
-       <div class="mavonEditor">
-    <no-ssr>
-      <mavon-editor  :toolbars="toolbars" v-model="content"/>
-    </no-ssr>
-  </div>
-    
+        <div class="mavonEditor">
+          <no-ssr>
+            <mavon-editor
+              class="v-note-wrapper"
+              :toolbars="toolbars"
+              v-model="content"
+            />
+          </no-ssr>
+        </div>
       </Col>
     </Row>
-    <Row type="flex" justify="space-around" :gutter="24" class-name="edit-foote" align="middle">
-      <Col span="5">
-        <Poptip trigger="hover" content="切换选择模式">
-          <Icon type="ios-swap" size="25" class="add" @click="addlei"/>
-        </Poptip>
-      </Col>
-      <Col span="10">
-        <Input v-if="!switchs" v-model="lei" placeholder="请输入新建类别" style="width: 200px"/>
-        <Select v-else v-model="lei" clearable style="width:200px" @on-open-change="refresh">
-          <Option v-for="item in leiList" :key="item._id" :value="item.name">{{ item.name }}</Option>
-        </Select>
-      </Col>
-      <Col span="5">
-        <Button type="primary" @click="commit">{{ btntext }}</Button>
-      </Col>
-    </Row>
+
     <Modal
       v-model="modal"
       title="警告"
       class-name="vertical-center-modal"
       @on-ok="deleteat"
-      @on-cancel="modal=false"
+      @on-cancel="modal = false"
     >
       <p>确定删除文章吗</p>
     </Modal>
@@ -54,11 +67,8 @@
   </div>
 </template>
 <script>
-
 export default {
-  components: {
-   
-  },
+  components: {},
   data() {
     return {
       modal: false,
@@ -88,6 +98,9 @@ export default {
     };
   },
   computed: {
+    add() {
+      return this.switchs ? "add" : "add add-r";
+    },
     ishas() {
       return this.$store.state.ishas;
     },
@@ -122,7 +135,11 @@ export default {
       return this.$store.state.userid;
     },
     btntext() {
-      return this.switchs ? "发表" : "添加";
+      if (this.ishas) {
+        return this.switchs ? "更改" : "添加";
+      } else {
+        return this.switchs ? "发表" : "添加";
+      }
     },
 
     editor() {
@@ -141,17 +158,13 @@ export default {
         this.refuselist();
       }
     },
- 
-    
+
     refresh() {
       this.$axios.post("/getlei", { userid: this.userId }).then(res => {
         this.leiList = res.data.data;
         //console.log(this.lei);
         this.refuselist();
       });
-      
-
-
     },
 
     addlei() {
@@ -192,8 +205,6 @@ export default {
         } else if (!this.title) {
           this.$Message.error("麻烦写标题");
         } else {
-      
-
           let data = {
             lei: this.lei,
             content: this.content,
@@ -204,28 +215,37 @@ export default {
 
           //判断更新还是新建
           if (this.ishas) {
-            this.$axios.post("/updatearticle", data).then(res => {
-              this.$Message.success(res.data.msg);
-              this.refuselist();
-            }).catch()
+            this.$axios
+              .post("/updatearticle", data)
+              .then(res => {
+                this.$Message.success(res.data.msg);
+                this.refuselist();
+              })
+              .catch();
           } else {
-            this.$axios.post("/newarticle", data).then(res => {
-              if (res.data.code == 201) {
-                this.$Message.error(res.data.msg);
-                return;
-              }
-              this.refuselist();
-              this.$Message.success(res.data.msg);
-            }).catch()
+            this.$axios
+              .post("/newarticle", data)
+              .then(res => {
+                if (res.data.code == 201) {
+                  this.$Message.error(res.data.msg);
+                  return;
+                }
+                this.refuselist();
+                this.$Message.success(res.data.msg);
+              })
+              .catch();
           }
         }
       }
     },
     refuselist() {
       setTimeout(() => {
-        this.$axios.post("/getlist").then(res => {
-          this.$store.commit("updatelist", res.data.data);
-        }).catch()
+        this.$axios
+          .post("/getlist")
+          .then(res => {
+            this.$store.commit("updatelist", res.data.data);
+          })
+          .catch();
       }, 500);
     }
   }
@@ -233,23 +253,22 @@ export default {
 </script>
 <style>
 .mavonEditor {
-  width: 100%;
-
+  width: 95%;
+  margin: auto;
+}
+.v-note-wrapper {
+  z-index: 0 !important;
+  height: 85vh;
 }
 .edit-title {
   padding: 2rem;
-}
-.edit-foote {
-  padding-top: 2rem;
-  z-index: 99999
-}
-.mdn {
-  z-index: -999;
+  padding-left: 0px;
 }
 
 .add {
   color: #0288d1;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 .add:hover {
   color: #b3e5fc;
@@ -257,7 +276,11 @@ export default {
 .add:active {
   color: #05a7ff;
 }
-.btm {
-  padding-bottom: 5rem;
+.add-r {
+  transform: rotate(45deg);
+}
+.lan {
+  width: 470px;
+  margin: auto;
 }
 </style>

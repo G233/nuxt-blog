@@ -20,11 +20,9 @@
       </Col>
     </Row>
     <Row class-name="row" style="margin-top:30px" :gutter="16" type="flex" justify="center">
+    
       <Col>
-        <Icon class="github" size="16" type="ios-mail" />
-      </Col>
-      <Col>
-        <div>214546439@qq.com</div>
+        <div style="font-weight: bold;cursor: pointer;" v-clipboard:copy="email" v-clipboard:success="CopyEmail" >{{email}}</div>
       </Col>
     </Row>
   </div>
@@ -34,11 +32,18 @@
 export default {
   name: "",
   data() {
-    return {};
+    return {
+      email:'atomg1024@gmail.com'
+    };
   },
   methods: {
     togithub() {
       window.open("https://github.com/G233");
+    },
+    CopyEmail(){
+      
+       this.$Message.success("已复制邮箱地址");
+
     }
   }
 };
@@ -69,6 +74,7 @@ export default {
 }
 .github {
   cursor: pointer;
+  font-weight: bold
 }
 .github:hover {
   background-color: whitesmoke;

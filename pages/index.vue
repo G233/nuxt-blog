@@ -67,6 +67,5 @@ export default {
   left: 0px;
   width: 100%;
 }
-.child {
-}
+
 </style>

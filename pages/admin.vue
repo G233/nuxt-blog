@@ -1,47 +1,37 @@
 <template>
-  <div>
-    <Row>
-      <Col span="3">
-      <Sidebar></Sidebar>
+  <div style="background-color: white">
+    <Row >
+      <div>
+      <Col span="3" class-name="Sidebar">
+        <Sidebar1></Sidebar1>
       </Col>
-      <Col span="21">
-      <Row>
-        <Col>
-          <div></div>
-        <Head></Head>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-        <div class='edit'>
-          <Edit></Edit>
-        </div>
-
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-        <Foote></Foote>
-        </Col>
-      </Row>
+     <Col span="3" class-name="Sidebar">
+        <Sidebar2></Sidebar2>
       </Col>
-    </Row>
+      </div>
+        <Col span="18">
+            <div class="edit">
+              <Edit></Edit>
+            </div>
+          </Col>
+     </Row>
   </div>
 </template>
 
 <script>
-import Head from "../components/back/Head";
-import Sidebar from "../components/back/Sidebar";
-import Foote from "../components/back/Foote";
+
+import Sidebar1 from "../components/back/Sidebar1";
+import Sidebar2 from "../components/back/Sidebar2";
 import Edit from "../components/back/Edit";
 
 export default {
-    middleware: 'auth',
+  middleware: "auth",
   name: "",
   components: {
-    Head,
-    Sidebar,
-    Foote,
+   
+    Sidebar1,
+    Sidebar2,
+ 
     Edit
   },
   data() {
@@ -54,19 +44,28 @@ export default {
         this.$store.commit("setUserId", res.data.data.userid);
       })
       .catch();
+  },
+  mounted() {
+    document
+      .querySelector("body")
+      .setAttribute("style", "background-color:white");
+  },
+  beforeDestroy() {
+    document.querySelector("body").removeAttribute("style");
   }
 };
 </script>
 
 <style scoped>
-.ibody {
-  padding: 2rem;
-  padding-bottom: 10rem;
-}
+
 .edit {
   margin: auto;
-  width: 80%;
+  /* width: 100%; */
+}
+.Sidebar {
+  background-color: white;
+  height: 100vh;
+  border-right:1px solid #e8eaec;
   
-  max-width: 1400px;
 }
 </style>

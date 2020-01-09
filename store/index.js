@@ -10,9 +10,9 @@ export const state = () => ({
   list: "",
   atid: "",
   date: "",
-  ishas: false
+  ishas: false,
+  LeiList: ''
 });
-// var marked = require("marked");
 
 export const mutations = {
   SET_USER(state, user) {
@@ -38,12 +38,14 @@ export const mutations = {
   updatelei(state, value) {
     state.lei = value;
   },
+  ChangeLei(state, value) {
+    state.LeiList =state.list[value].list 
+    console.log(state.LeiList)
+  },
   changearticle(state, data) {
 
     console.log(data);
     if (!data.istrue) {
-  
-      // state.content = marked(data.content);
       var hljs = require('highlight.js');
       var md = require('markdown-it')({
         html: true,
@@ -55,13 +57,10 @@ export const mutations = {
               return hljs.highlight(lang, str).value;
             } catch (__) { }
           }
-
           return ''; // 使用额外的默认转义
         }
       });
       state.content = md.render(data.content);
- 
-      
     } else {
       state.content = data.content;
     }
