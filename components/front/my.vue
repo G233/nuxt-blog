@@ -54,7 +54,7 @@ export default {
   position: sticky;
   display: inline-block;
   top: 85px;
-  margin-top: 202px;
+  margin-top: 192px;
   margin-right: 30px;
   height: 400px;
   text-align: center;

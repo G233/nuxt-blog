@@ -21,12 +21,7 @@ export default {
         let { data } = await $axios.post("/api/recent");
         return { list: data.data };
       } catch (e) {}
-    } else {
-      try {
-        let { data } = await $axios.post("/recent");
-        return { list: data.data };
-      } catch (e) {}
-    }
+    } 
   },
   components: {
     LgCard
@@ -56,7 +51,7 @@ export default {
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .time {
   font-size: 18px;
   font-weight: bold;

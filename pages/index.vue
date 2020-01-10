@@ -29,7 +29,6 @@ import Foote from "../components/front/foote";
 import Toutu from "../components/front/toutu";
 import Head from "../components/front/head";
 import MyCard from "../components/front/my";
-import { async } from "q";
 export default {
   components: {
     Toutu,
@@ -37,9 +36,9 @@ export default {
     Foote,
     MyCard
   },
-  async asyncData({ $axios, app }) {
+  async asyncData({ $axios, app }){
     try {
-      let res = await $axios.post("/api/getlist");
+      let res = await $axios.post("api/getlist");
       app.store.commit("updatelist", res.data.data);
     } catch (e) {
       console.log(e);
@@ -57,7 +56,6 @@ export default {
 .tou {
   position: fixed;
   top: 0px;
-
   width: 100%;
   z-index: 1000;
 }
