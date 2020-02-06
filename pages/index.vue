@@ -1,19 +1,15 @@
-<template >
+<template>
   <div style="position:relative">
     <div class="tou">
       <Head></Head>
     </div>
-
     <div>
-      <div>
+      <div class="top-pad">
         <Toutu class="toutu"></Toutu>
       </div>
 
-      <Row type="flex" justify="center" style="padding-top:100px">
+      <Row >
         <Col>
-          <MyCard></MyCard>
-        </Col>
-        <Col class-name="child">
           <nuxt-child />
         </Col>
       </Row>
@@ -36,7 +32,7 @@ export default {
     Foote,
     MyCard
   },
-  async asyncData({ $axios, app }){
+  async asyncData({ $axios, app }) {
     try {
       let res = await $axios.post("api/getlist");
       app.store.commit("updatelist", res.data.data);
@@ -65,5 +61,19 @@ export default {
   left: 0px;
   width: 100%;
 }
+.top-pad{
+    padding-bottom:200px;
+}
 
+@media screen and (max-width: 840px) {
+  .mycard {
+    display: none;
+  }
+  .toutu {
+    display: none;
+  }
+  .top-pad{
+    padding-bottom:100px;
+}
+}
 </style>

@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="card">
-      <div class="cardt" @click="topage" :id="data._id">{{data.title}}</div>
-      <div class="cardc">{{data.content}}</div>
-      <Row style="margin-top:15px" type="flex" justify="center" align="middle">
+      <div class="cardt" @click="topage" :id="data._id">{{ data.title }}</div>
+      <div class="cardc">{{ data.content }}</div>
+      <Row style="margin-top:15px" >
         <Col span="12">
           <Button @click="topage" :id="data._id">Read more</Button>
         </Col>
         <Col span="12">
-          <div class="cardb">{{data.createdAt.split('T')[0]}}</div>
+          <div class="cardb">{{ data.createdAt.split("T")[0] }}</div>
         </Col>
       </Row>
     </div>
@@ -23,6 +23,7 @@ export default {
       this.$router.push({
         name: "index-article-id",
         params: { id: this.data._id }
+        
       });
     }
   }
@@ -32,7 +33,6 @@ export default {
 <style scoped>
 .card {
   background-color: white;
-  max-width: 600px;
   padding: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -40,6 +40,7 @@ export default {
   transition: all 0.2s ease-in-out;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }
+
 
 .cardt {
   font-size: 19px;
@@ -65,6 +66,6 @@ export default {
   font-weight: 700;
   font-size: 13px;
   color: #808695;
-  margin-right: 60px;
+
 }
 </style>

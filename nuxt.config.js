@@ -1,5 +1,6 @@
 module.exports = {
   server: {
+    host:'192.168.0.120',
     port: 3002
   },
   // other configs

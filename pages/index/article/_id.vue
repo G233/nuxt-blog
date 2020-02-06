@@ -10,7 +10,7 @@
         <h6>发表于：{{ date }}</h6>
       </Col>
     </Row>
-    <Row type="flex" justify="center" align="middle">
+    <Row>
       <Col>
         <Card class="article">
           <div class="markdown-body" v-html="content"></div>
@@ -57,11 +57,7 @@ export default {
       return this.$store.state.date;
     }
   },
-  watch: {
-    // $route(to, from) {
-    //   this.getarticle();
-    // }
-  },
+
   created() {
     this.$store.dispatch("getarticle", { id: this.$route.params.id });
   },
@@ -81,7 +77,8 @@ export default {
 }
 
 .article {
-  width: 900px;
+  width: 95%;
+  max-width: 900px;
   margin: auto;
   padding: 10px;
   min-height: 1000px;
@@ -95,5 +92,13 @@ export default {
 
 .md {
   z-index: 1;
+}
+@media screen and (max-width: 840px) {
+  .title{
+    color: #17233d
+  }
+  .dateclass{
+    color: #515a6e
+  }
 }
 </style>

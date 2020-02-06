@@ -1,15 +1,10 @@
 <template>
-  <Row type="flex" justify="center" align="middle">
-    <Col>
-      <div class="recent">
-        <h1 class="title" style>最近文章</h1>
-
-        <div v-for="(item, index) in list" :key="index">
-          <LgCard :data="item"></LgCard>
-        </div>
-      </div>
-    </Col>
-  </Row>
+  <div>
+    <h1 class="title">最近文章</h1>
+    <div v-for="(item, index) in list" :key="index">
+      <LgCard class="card1" :data="item"></LgCard>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -21,7 +16,7 @@ export default {
         let { data } = await $axios.post("/api/recent");
         return { list: data.data };
       } catch (e) {}
-    } 
+    }
   },
   components: {
     LgCard
@@ -31,15 +26,6 @@ export default {
       list: ""
     };
   },
-  // created() {
-  //   this.$axios
-  //     .post("/recent")
-  //     .then(res => {
-  //       this.list = res.data.data;
-  //       console.log(res);
-  //     })
-  //     .catch(ress => {});
-  // },
   methods: {
     toact(e) {
       this.$router.push({
@@ -57,14 +43,25 @@ export default {
   font-weight: bold;
   text-align: right;
 }
-.recent {
-  width: 90%;
-  padding-top: 100px;
-  max-width: 600px;
-}
 .title {
   padding-bottom: 2rem;
   color: #fff;
-  text-align: right;
+  text-align: center;
+}
+.recent-page {
+  background-color: aquamarine;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.card1{
+  width: 95%;
+  margin: auto;
+  max-width: 600px;
+}
+@media screen and (max-width: 840px) {
+  .title {
+    color: #17233d;
+  }
 }
 </style>
