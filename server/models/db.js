@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
+const {dbConfigString} = require('../config/dbconfig')
 require('../models/index')
-mongoose.connect('mongodb://liugu:liu23358632@119.29.177.240:27017/blog?authSource=admin');
-//mongoose.connect('mongodb://127.0.0.1/test');
+mongoose.connect(dbConfigString);
 var db = mongoose.connection;
 
 

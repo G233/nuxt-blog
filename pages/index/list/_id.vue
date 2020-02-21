@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1 class="title">{{ name }}</h1>
     <div v-for="(item, index) in list" :key="item._id">
       <LgCard class="card2" :data="item"></LgCard>
     </div>
@@ -49,20 +48,10 @@ export default {
   }
 };
 </script>
-<style scope>
-.title {
-  padding-bottom: 2rem;
-  color: #fff;
-  text-align: center;
-}
-.card2{
+<style scope lang="scss">
+.card2 {
   width: 90%;
-  margin: auto
-}
-
-@media screen and (max-width: 840px) {
-  .title {
-    color: #17233d;
-  }
+  margin: auto;
+  max-width: 600px;
 }
 </style>

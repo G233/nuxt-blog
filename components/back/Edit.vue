@@ -40,6 +40,15 @@
         </Col>
       </Row>
     </div>
+    <div class="abstract-text">
+      <Input
+        v-model="abstract"
+        type="textarea"
+        :rows="10"
+        placeholder="这里输入摘要"
+      />
+    </div>
+
     <Row>
       <Col>
         <div class="mavonEditor">
@@ -121,6 +130,14 @@ export default {
       },
       set(value) {
         this.$store.commit("updatettl", value);
+      }
+    },
+    abstract: {
+      get() {
+        return this.$store.state.abstract;
+      },
+      set(value) {
+        this.$store.commit("updateabstract", value);
       }
     },
     lei: {
@@ -210,7 +227,8 @@ export default {
             content: this.content,
             title: this.title,
             userid: this.userId,
-            atid: this.atid
+            atid: this.atid,
+            abstract: this.abstract
           };
 
           //判断更新还是新建
@@ -232,6 +250,7 @@ export default {
                 }
                 this.refuselist();
                 this.$Message.success(res.data.msg);
+                this.switchs = !this.switchs;
               })
               .catch();
           }
@@ -252,6 +271,11 @@ export default {
 };
 </script>
 <style>
+.abstract-text {
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
 .mavonEditor {
   width: 95%;
   margin: auto;
@@ -262,7 +286,8 @@ export default {
 }
 .edit-title {
   padding: 2rem;
-  padding-left: 0px;
+  padding-bottom: 1rem;
+  width: 100%;
 }
 
 .add {

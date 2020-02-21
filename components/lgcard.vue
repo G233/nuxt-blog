@@ -2,8 +2,8 @@
   <div>
     <div class="card">
       <div class="cardt" @click="topage" :id="data._id">{{ data.title }}</div>
-      <div class="cardc">{{ data.content }}</div>
-      <Row style="margin-top:15px" >
+      <div class="cardc">{{ data.abstract }}</div>
+      <Row type="flex" align="bottom" style="margin-top:15px;">
         <Col span="12">
           <Button @click="topage" :id="data._id">Read more</Button>
         </Col>
@@ -20,11 +20,14 @@ export default {
   props: ["data"],
   methods: {
     topage() {
-      this.$router.push({
-        name: "index-article-id",
-        params: { id: this.data._id }
-        
-      });
+      try {
+        this.$router.push({
+          name: "index-article-id",
+          params: { id: this.data._id }
+        });
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 };
@@ -38,9 +41,7 @@ export default {
   margin-bottom: 20px;
   border-radius: 5px;
   transition: all 0.2s ease-in-out;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }
-
 
 .cardt {
   font-size: 19px;
@@ -51,14 +52,14 @@ export default {
   text-align: start;
 }
 .cardt:hover {
-  color: rgb(53, 159, 213);
+  color: #808695;
 }
 .cardc {
   font-size: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
 }
 .cardb {
@@ -66,6 +67,5 @@ export default {
   font-weight: 700;
   font-size: 13px;
   color: #808695;
-
 }
 </style>

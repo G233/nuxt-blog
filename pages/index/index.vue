@@ -1,9 +1,7 @@
 <template>
   <div>
     <h1 class="title">最近文章</h1>
-    <div v-for="(item, index) in list" :key="index">
-      <LgCard class="card1" :data="item"></LgCard>
-    </div>
+   
   </div>
 </template>
 
@@ -33,6 +31,9 @@ export default {
         params: { name: e.path[0].id }
       });
     }
+  },
+  onLoad(){
+    
   }
 };
 </script>
@@ -54,7 +55,7 @@ export default {
   justify-content: center;
   flex-direction: column;
 }
-.card1{
+.card{
   width: 95%;
   margin: auto;
   max-width: 600px;

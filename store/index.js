@@ -1,5 +1,6 @@
-import axios from "@nuxtjs/axios"
+import axios from "@nuxtjs/axios";
 export const state = () => ({
+  isfirst: true,
   showpage: false,
   authUser: false,
   counter: 0,
@@ -11,16 +12,21 @@ export const state = () => ({
   atid: "",
   date: "",
   ishas: false,
-  LeiList: ''
+  LeiList: "",
+  abstract: ""
 });
 
 export const mutations = {
   SET_USER(state, user) {
     state.authUser = user;
   },
+  tohome(state, user) {
+    state.isfirst = false;
+  },
   newatc(state) {
     (state.content = ""), (state.title = ""), (state.lei = "");
     state.ishas = false;
+    state.abstract = "";
   },
 
   setUserId(state, id) {
@@ -28,6 +34,9 @@ export const mutations = {
   },
   updatelist(state, data) {
     state.list = data;
+  },
+  updateabstract(state, data) {
+    state.abstract = data;
   },
   updatectt(state, value) {
     state.content = value;
@@ -39,25 +48,22 @@ export const mutations = {
     state.lei = value;
   },
   ChangeLei(state, value) {
-    state.LeiList =state.list[value].list 
-    console.log(state.LeiList)
+    state.LeiList = state.list[value].list;
   },
   changearticle(state, data) {
-
-    console.log(data);
     if (!data.istrue) {
-      var hljs = require('highlight.js');
-      var md = require('markdown-it')({
+      var hljs = require("highlight.js");
+      var md = require("markdown-it")({
         html: true,
         linkify: true,
         typographer: true,
-        highlight: function (str, lang) {
+        highlight: function(str, lang) {
           if (lang && hljs.getLanguage(lang)) {
             try {
               return hljs.highlight(lang, str).value;
-            } catch (__) { }
+            } catch (__) {}
           }
-          return ''; // 使用额外的默认转义
+          return ""; // 使用额外的默认转义
         }
       });
       state.content = md.render(data.content);
@@ -66,11 +72,12 @@ export const mutations = {
     }
 
     state.title = data.title;
+    state.abstract = data.abstract;
     state.lei = data.lei.name;
     state.ishas = true;
     state.atid = data._id;
     state.date = data.createdAt.split("T")[0];
-    state.showpage = true
+    state.showpage = true;
   }
 };
 
@@ -82,34 +89,11 @@ export const actions = {
     }
   },
   async getarticle({ commit }, { id }) {
-
     try {
-      let res = await this.$axios
-        .post("/getarticle", {
-          id: id
-        })
+      let res = await this.$axios.post("/getarticle", {
+        id: id
+      });
       commit("changearticle", res.data.data);
-
-    }
-    catch (e) {
-      // console.log(e)
-    }
-
-    // this.showpage = true;
-
-
+    } catch (e) {}
   }
-
-  //  async login({ commit }, { email, passwd }) {
-  //    try {
-  //      const { data } = await axios.$post('/login', { email, passwd })
-  //      commit('SET_USER', data)
-  //       this.$router.push("/admin");
-  //    } catch (error) {
-  //      if (error.response && error.response.status === 401) {
-  //        throw new Error('Bad credentials')
-  //      }
-  //      throw error
-  //    }
-  //  },
 };

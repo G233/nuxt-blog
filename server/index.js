@@ -6,7 +6,6 @@ const Koa = require("koa");
 const consola = require("consola");
 const cors = require("koa2-cors");
 const onerror = require("koa-onerror");
-
 const session = require("koa-session");
 const logger = require("koa-logger");
 const koaBody = require("koa-body");

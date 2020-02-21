@@ -1,7 +1,7 @@
 module.exports = {
   server: {
-    host:'192.168.0.120',
-    port: 3002
+    port: 3002,
+    host: "192.168.0.120"
   },
   // other configs
   mode: "universal",
@@ -14,7 +14,6 @@ module.exports = {
       {
         charset: "utf-8"
       },
-
       {
         name: "viewport",
         content: "width=device-width, initial-scale=1"
@@ -42,7 +41,7 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: ['view-design/dist/styles/iview.css', "assets/main.css"],
+  css: ["view-design/dist/styles/iview.css", "assets/main.css"],
   /*
    ** Plugins to load before mounting the App
    */
@@ -53,7 +52,10 @@ module.exports = {
   /*
    ** Nuxt.js modules
    */
-  modules: ["@nuxtjs/axios"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/style-resources"],
+  styleResources: {
+    scss: "./assets/index.scss"
+  },
   axios: {
     browserBaseURL: "/api"
     // proxyHeaders: false
@@ -65,6 +67,6 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) { }
+    extend(config, ctx) {}
   }
 };

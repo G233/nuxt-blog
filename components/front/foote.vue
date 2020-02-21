@@ -1,6 +1,6 @@
 <template>
   <div class="foote">
-    <a  href="http://www.beian.miit.gov.cn">湘ICP备18002980号</a>
+    <a href="http://www.beian.miit.gov.cn">湘ICP备18002980号</a>
 
     <a
       href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43012402000189"
@@ -21,12 +21,12 @@ export default {
 
 <style scoped>
 .foote {
-  padding-top: 6rem;
-  padding-bottom: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
-a{
+a {
   display: block;
   text-align: center;
-  color: #808695
+  color: #808695;
 }
 </style>

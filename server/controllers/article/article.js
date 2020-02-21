@@ -22,27 +22,45 @@ class Article {
     return ctx.success({ msg: "获取类别成功", data: leis });
   }
   static async newarticle(ctx) {
-    let { lei, content, title, userid } = ctx.request.body;
+    let { lei, content, title, userid, abstract } = ctx.request.body;
+    if (abstract.length < 10) {
+      abstract = content.replace(/#/g, "").replace(/\*/g, "");
+    }
     let hasA = await ArticleModel.findOne({ author: userid, title: title });
     if (hasA) {
       return ctx.error({ msg: "标题重复" });
     }
     let alei = await LeiModel.findOne({ name: lei });
-    let newa = await ArticleModel.create({
+    let aa = await ArticleModel.create({
       lei: alei._id,
       content: content,
       title: title,
-      author: userid
+      author: userid,
+      abstract: abstract
     });
+    console.log(aa);
     Article.refuselist(userid);
     return ctx.success({ msg: "文章新建成功" });
   }
   static async updatearticle(ctx) {
-    let { lei, content, title, userid, atid } = ctx.request.body;
+    let { lei, content, title, userid, atid, abstract } = ctx.request.body;
     let alei = await LeiModel.findOne({ name: lei });
-    let At = await ArticleModel.findOneAndUpdate(
+    try {
+      if (abstract == null) {
+        console.log("正在添加摘要");
+        abstract = content.replace(/#/g, "").replace(/\*/g, "");
+      }
+    } catch (e) {}
+    try {
+      if (abstract.length < 50) {
+        console.log("正在添加摘要");
+        abstract = content.replace(/#/g, "").replace(/\*/g, "");
+      }
+    } catch (e) {}
+
+    await ArticleModel.findOneAndUpdate(
       { _id: atid },
-      { lei: alei._id, content: content, title: title }
+      { lei: alei._id, content: content, title: title, abstract: abstract }
     );
     Article.refuselist(userid);
 
@@ -64,15 +82,12 @@ class Article {
     let List;
     try {
       List = await LeiModel.find({});
-    } catch (e) { }
+    } catch (e) {}
     return ctx.success({ data: List });
   }
-  static async refuselist(userid) {
-    console.log("开始刷新列表");
-
+  static async refuselist() {
     let leis = await LeiModel.find();
     for (let x of leis) {
-      console.log(x);
       let alist = [];
       let ats = await ArticleModel.find({ lei: x._id });
       for (let y of ats) {
@@ -105,7 +120,7 @@ class Article {
   }
   static async getlists(ctx) {
     let { id } = ctx.request.body;
-    let listname = await LeiModel.findById(id)
+    let listname = await LeiModel.findById(id);
     let list = await ArticleModel.find({ lei: id });
     return ctx.success({ data: list, msg: listname.name });
   }

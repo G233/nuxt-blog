@@ -1,5 +1,6 @@
 <template>
   <div v-if="showpage">
+    <div style="height:2rem"></div>
     <Row class-name="title" type="flex" justify="center" align="middle">
       <Col>
         <h2>{{ title }}</h2>
@@ -12,9 +13,9 @@
     </Row>
     <Row>
       <Col>
-        <Card class="article">
+        <div class="article">
           <div class="markdown-body" v-html="content"></div>
-        </Card>
+        </div>
       </Col>
     </Row>
   </div>
@@ -73,7 +74,6 @@ export default {
 .title {
   padding-top: 35px;
   font-size: 16px;
-  color: white;
 }
 
 .article {
@@ -85,7 +85,6 @@ export default {
 }
 
 .dateclass {
-  color: white;
   padding: 35px;
   font-size: 20px;
 }
@@ -94,11 +93,11 @@ export default {
   z-index: 1;
 }
 @media screen and (max-width: 840px) {
-  .title{
-    color: #17233d
+  .title {
+    color: #17233d;
   }
-  .dateclass{
-    color: #515a6e
+  .dateclass {
+    color: #515a6e;
   }
 }
 </style>
