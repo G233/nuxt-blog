@@ -9,6 +9,7 @@
 <script>
 import LgCard from "../../../components/lgcard";
 export default {
+  scrollToTop: true,
   components: {
     LgCard
   },
@@ -41,7 +42,7 @@ export default {
     },
     topage(e) {
       this.$router.push({
-        name: "index-article-name",
+        name: "home-article-name",
         params: { name: e.target.id }
       });
     }

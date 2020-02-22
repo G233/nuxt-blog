@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="head-component-min">
-      <div class="home-txt" @click="tohome">主页</div>
-
+      <nuxt-link class="home-txt" to="/">主页</nuxt-link>
       <div :class="homeicon" @click="showlist">
         <Icon size="30" type="md-list" />
       </div>
@@ -20,10 +19,9 @@
     </div>
     <div class="head-component-max">
       <div class="lei-list">
-        <div @click="tohome" style="margin-left:80px" class="lei-text">
+        <nuxt-link to="/" style="margin-left:80px" class="lei-text">
           主页
-        </div>
-        <nuxt-link class="home-txt" to="/home">首页</nuxt-link>
+        </nuxt-link>
         <div
           class="lei-text"
           v-for="(item, index1) in list"
@@ -73,7 +71,7 @@ export default {
     tolist(e) {
       this.showMore = false;
       this.$router.push({
-        name: "index-list-id",
+        name: "home-list-id",
         params: { id: e.target.id, name: e.target.textContent }
       });
     }
@@ -83,8 +81,8 @@ export default {
 
 <style lang="scss" scoped>
 .head-component-min {
-  box-shadow: 8px 28px 50px rgba(39, 44, 49, 0.07),
-    1px 6px 12px rgba(39, 44, 49, 0.04);
+  box-shadow: 8px 28px 50px rgba(55, 61, 68, 0.04),
+    1px 6px 12px rgba(55, 61, 68, 0.04);
   position: relative;
   background-color: $main-color;
   width: 100%;
@@ -98,6 +96,7 @@ export default {
     font-weight: bold;
     cursor: pointer;
     font-size: 20px;
+    color: $title-color;
   }
   .home-icon {
     font-size: 20px;

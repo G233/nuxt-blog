@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1 class="title">最近文章</h1>
-   
   </div>
 </template>
 
@@ -27,14 +26,12 @@ export default {
   methods: {
     toact(e) {
       this.$router.push({
-        name: "index-article-name",
+        name: "home-article-name",
         params: { name: e.path[0].id }
       });
     }
   },
-  onLoad(){
-    
-  }
+  onLoad() {}
 };
 </script>
 
@@ -55,7 +52,7 @@ export default {
   justify-content: center;
   flex-direction: column;
 }
-.card{
+.card {
   width: 95%;
   margin: auto;
   max-width: 600px;

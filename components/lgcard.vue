@@ -22,7 +22,7 @@ export default {
     topage() {
       try {
         this.$router.push({
-          name: "index-article-id",
+          name: "home-article-id",
           params: { id: this.data._id }
         });
       } catch (e) {
