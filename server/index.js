@@ -83,8 +83,8 @@ app.use(
     {
       key: "lxg",
       overwrite: true, //覆写Cookie
-      httpOnly: true, //经允许通过 JS 来更改
-      renew: true,//会话快到期时续订，可以保持用户一直登陆a
+      httpOnly: true, //不允许通过 JS 来更改
+      renew: true, //会话快到期时续订，可以保持用户一直登陆a
       store: new MongooseStore({
         createIndexes: "appSessions",
         connection: mongoose,
@@ -110,9 +110,6 @@ app.use(
   })
 );
 
-// logger
-// app.use(require("./middlewaers/log"));
-// response
 app.use(require("./middlewaers/response"));
 //session
 

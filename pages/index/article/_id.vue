@@ -1,6 +1,5 @@
 <template>
   <div v-if="showpage">
-    <div style="height:2rem"></div>
     <Row class-name="title" type="flex" justify="center" align="middle">
       <Col>
         <h2>{{ title }}</h2>
@@ -65,6 +64,7 @@ export default {
   async asyncData({ store, params }) {
     await store.dispatch("getarticle", { id: params.id });
   },
+  // 还有问题
 
   methods: {}
 };
@@ -72,7 +72,7 @@ export default {
 
 <style scoped>
 .title {
-  padding-top: 35px;
+  padding-top: 20px;
   font-size: 16px;
 }
 

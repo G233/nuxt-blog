@@ -2,6 +2,7 @@
   <div>
     <div class="head-component-min">
       <div class="home-txt" @click="tohome">主页</div>
+
       <div :class="homeicon" @click="showlist">
         <Icon size="30" type="md-list" />
       </div>
@@ -22,6 +23,7 @@
         <div @click="tohome" style="margin-left:80px" class="lei-text">
           主页
         </div>
+        <nuxt-link class="home-txt" to="/home">首页</nuxt-link>
         <div
           class="lei-text"
           v-for="(item, index1) in list"

@@ -7,7 +7,7 @@
       <nuxt-child />
     </div>
 
-    <div class="bottom">
+    <div>
       <Foote></Foote>
     </div>
   </div>
@@ -31,7 +31,6 @@ export default {
       console.log(e);
     }
   },
-  middleware: "tohome",
   components: {
     Head,
     Foote
@@ -54,19 +53,11 @@ export default {
 .body {
   width: 95vw;
   margin: auto;
-  margin-top: 2rem;
+  margin-top: 3rem;
   max-width: 15rem;
-  padding-left: 0.6rem;
-  padding-right: 0.6rem;
   padding-top: 0.2rem;
   box-shadow: 8px 28px 50px rgba(39, 44, 49, 0.07),
     1px 6px 12px rgba(39, 44, 49, 0.04);
   min-height: 1000px;
-}
-.bottom {
-  position: fixed;
-  bottom: 0px;
-  width: 100%;
-  z-index: 100;
 }
 </style>

@@ -22,7 +22,6 @@
         <LgCard :data="item"></LgCard>
       </div>
     </div>
-
     <Foote></Foote>
   </div>
 </template>
@@ -40,6 +39,7 @@ export default {
   async asyncData({ $axios, app }) {
     try {
       let res1, res2;
+      let a;
       if (process.server) {
         [res1, res2] = await Promise.all([
           $axios.post("api/getlist"),

@@ -1,7 +1,7 @@
 module.exports = {
   server: {
-    port: 3002,
-    host: "192.168.0.120"
+    port: 3002
+    // host: "192.168.0.120"
   },
   // other configs
   mode: "universal",
@@ -36,12 +36,18 @@ module.exports = {
    ** Customize the progress-bar color
    */
   loading: {
-    color: "#fff"
+    color: "#19be6b"
   },
   /*
    ** Global CSS
    */
   css: ["view-design/dist/styles/iview.css", "assets/main.css"],
+
+  postcss: [
+    require("postcss-px2rem")({
+      remUnit: 75
+    })
+  ],
   /*
    ** Plugins to load before mounting the App
    */
