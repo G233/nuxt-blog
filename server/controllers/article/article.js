@@ -121,7 +121,7 @@ class Article {
   static async getlists(ctx) {
     let { id } = ctx.request.body;
     let listname = await LeiModel.findById(id);
-    let list = await ArticleModel.find({ lei: id });
+    let list = await ArticleModel.find({ lei: id }).sort({ createdAt: -1 });
     return ctx.success({ data: list, msg: listname.name });
   }
 }

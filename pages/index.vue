@@ -30,11 +30,13 @@
 import Foote from "../components/front/foote";
 import Head from "../components/front/head";
 import LgCard from "../components/lgcard";
+// import My from "../components/front/my";
 export default {
   components: {
     Head,
     Foote,
     LgCard
+    // My
   },
   async asyncData({ $axios, app }) {
     try {
@@ -46,15 +48,18 @@ export default {
           $axios.post("api/recent")
         ]);
         app.store.commit("updatelist", res1.data.data);
+        return {
+          list: res2.data.data
+        };
       } else {
         if (app.store.state.isfirst) {
           res2 = await $axios.post("/recent");
           app.store.commit("tohome");
+          return {
+            list: res2.data.data
+          };
         }
       }
-      return {
-        list: res2.data.data
-      };
     } catch (e) {
       console.log(e);
     }
@@ -124,6 +129,7 @@ export default {
 }
 
 .card {
+  overflow: hidden;
   width: 95vw;
   margin: auto;
   max-width: 15rem;
@@ -144,5 +150,8 @@ export default {
     margin-top: 20px;
     color: $sub-color;
   }
+}
+.my {
+  float: left;
 }
 </style>
