@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div style="height:1000px"></div>
     <div class="top-text">
       <h1>AtomG 的技术博客</h1>
       <h3>记录学习与生活</h3>

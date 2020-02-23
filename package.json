@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.6.0",
+    "@nuxtjs/style-resources": "^1.0.0",
     "cross-env": "^5.2.1",
     "debug": "^2.6.3",
     "github-markdown-css": "^3.0.1",
