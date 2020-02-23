@@ -60,4 +60,10 @@ export default {
     1px 6px 12px rgba(39, 44, 49, 0.04);
   min-height: 1000px;
 }
+@media screen and (max-width: 840px) {
+  .body {
+    box-shadow: unset;
+    width: 100vw;
+  }
+}
 </style>

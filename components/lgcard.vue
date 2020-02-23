@@ -5,7 +5,7 @@
       <div class="cardc">{{ data.abstract }}</div>
       <Row type="flex" align="bottom" style="margin-top:15px;">
         <Col span="12">
-          <Button @click="topage" :id="data._id">Read more</Button>
+          <Button @click="topage" :id="data._id">阅读全文</Button>
         </Col>
         <Col span="12">
           <div class="cardb">{{ data.createdAt.split("T")[0] }}</div>

@@ -1,7 +1,7 @@
 module.exports = {
   server: {
-    port: 3002
-    // host: "192.168.0.120"
+    port: 3002,
+    host: "192.168.0.120"
   },
   // other configs
   mode: "universal",

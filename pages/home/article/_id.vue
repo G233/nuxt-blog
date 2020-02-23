@@ -70,34 +70,29 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .title {
   padding-top: 20px;
   font-size: 16px;
+  color: $title-color;
 }
 
 .article {
   width: 95%;
   max-width: 900px;
   margin: auto;
-  padding: 10px;
+  padding: 0.3rem;
   min-height: 1000px;
+  padding-bottom: 1rem;
 }
 
 .dateclass {
   padding: 35px;
   font-size: 20px;
+  color: $sub-color;
 }
 
 .md {
   z-index: 1;
-}
-@media screen and (max-width: 840px) {
-  .title {
-    color: #17233d;
-  }
-  .dateclass {
-    color: #515a6e;
-  }
 }
 </style>

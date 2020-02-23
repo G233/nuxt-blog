@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div style="height:1000px"></div>
     <div class="top-text">
       <h1>AtomG 的技术博客</h1>
       <h3>记录学习与生活</h3>
@@ -45,14 +46,13 @@ export default {
           $axios.post("api/getlist"),
           $axios.post("api/recent")
         ]);
+        app.store.commit("updatelist", res1.data.data);
       } else {
-        [res1, res2] = await Promise.all([
-          $axios.post("/getlist"),
-          $axios.post("/recent")
-        ]);
+        if (app.store.state.isfirst) {
+          res2 = await $axios.post("/recent");
+          app.store.commit("tohome");
+        }
       }
-
-      app.store.commit("updatelist", res1.data.data);
       return {
         list: res2.data.data
       };
@@ -60,6 +60,7 @@ export default {
       console.log(e);
     }
   },
+  async created() {},
   computed: {
     classify() {
       return this.$store.state.list;
