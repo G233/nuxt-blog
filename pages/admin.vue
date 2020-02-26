@@ -11,6 +11,7 @@
       </div>
 
       <Col span="18">
+        <Button class="nginx" @click="tonginx" type="primary">Nginx</Button>
         <div class="edit">
           <Edit></Edit>
         </div>
@@ -32,6 +33,11 @@ export default {
     Sidebar2,
 
     Edit
+  },
+  methods: {
+    tonginx() {
+      window.open("http://119.29.177.240/verynginx/index_zh.html#");
+    }
   },
   data() {
     return {};
@@ -64,5 +70,10 @@ export default {
   background-color: white;
   height: 100vh;
   border-right: 1px solid #e8eaec;
+}
+.nginx {
+  float: right;
+  margin-right: 20px;
+  margin-top: 20px;
 }
 </style>
