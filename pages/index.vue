@@ -30,6 +30,7 @@
 import Foote from "../components/front/foote";
 import Head from "../components/front/head";
 import LgCard from "../components/lgcard";
+
 export default {
   components: {
     Head,
