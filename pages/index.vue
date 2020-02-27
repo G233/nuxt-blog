@@ -30,13 +30,11 @@
 import Foote from "../components/front/foote";
 import Head from "../components/front/head";
 import LgCard from "../components/lgcard";
-// import My from "../components/front/my";
 export default {
   components: {
     Head,
     Foote,
     LgCard
-    // My
   },
   async asyncData({ $axios, app }) {
     try {
