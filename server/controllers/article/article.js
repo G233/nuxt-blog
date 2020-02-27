@@ -18,9 +18,14 @@ class Article {
 
   static async getlei(ctx) {
     let leis = await LeiModel.find({});
-
     return ctx.success({ msg: "获取类别成功", data: leis });
   }
+
+  static async getallartc(ctx) {
+    let article = await ArticleModel.find({});
+    return ctx.success({ msg: "获取所有文章成功", data: article });
+  }
+
   static async newarticle(ctx) {
     let { lei, content, title, userid, abstract } = ctx.request.body;
     if (abstract.length < 10) {
