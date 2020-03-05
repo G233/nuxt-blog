@@ -1,4 +1,4 @@
-// import axios from "axios";
+import axios from "axios";
 module.exports = {
   generate: {
     async routes(callback) {
@@ -84,7 +84,7 @@ module.exports = {
     scss: "./assets/index.scss"
   },
   axios: {
-    browserBaseURL: "/api"
+    browserBaseURL: "https://www.liuxiaogu.com/api"
     // proxyHeaders: false
   },
   /*
