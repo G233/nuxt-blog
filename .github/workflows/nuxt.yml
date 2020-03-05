@@ -4,7 +4,7 @@ on: push
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout master
         uses: actions/checkout@v2
@@ -19,7 +19,6 @@ jobs:
       - name: Build project
         run: yarn && yarn generate
 
-
       - name: Tencent Cloud COS Action
         uses: TencentCloud/cos-action@v1
         with:
@@ -27,5 +26,5 @@ jobs:
           secret_id: ${{ secrets.SECRET_ID }}
           secret_key: ${{ secrets.SECRET_KEY }}
           cos_bucket: ${{ secrets.BUCKET }}
-          cos_bucket: ap-chengdu
-          remote_path: 
+          cos_region: ap-chengdu
+          remote_path:
