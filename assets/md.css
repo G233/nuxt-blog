@@ -215,6 +215,9 @@
 .markdown-body img {
   border-style: none;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .markdown-body code,

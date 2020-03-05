@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 module.exports = {
   generate: {
     async routes(callback) {
@@ -15,8 +15,8 @@ module.exports = {
     }
   },
   server: {
-    port: 3002,
-    host: "192.168.0.120"
+    port: 3002
+    // host: "192.168.0.120"
   },
   // other configs
   mode: "universal",
@@ -57,7 +57,11 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: ["view-design/dist/styles/iview.css", "assets/main.css"],
+  css: [
+    "view-design/dist/styles/iview.css",
+    "assets/main.css",
+    "assets/flexible.css"
+  ],
 
   postcss: [
     require("postcss-px2rem")({
@@ -69,7 +73,8 @@ module.exports = {
    */
   plugins: [
     "@/plugins/iview",
-    { src: "@/plugins/vue-mavon-editor", srr: false }
+    { src: "@/plugins/vue-mavon-editor", srr: false },
+    { src: "~/plugins/vue-lazyload.js", ssr: false }
   ],
   /*
    ** Nuxt.js modules
@@ -79,7 +84,7 @@ module.exports = {
     scss: "./assets/index.scss"
   },
   axios: {
-    browserBaseURL: "https://119.29.177.240/api"
+    browserBaseURL: "/api"
     // proxyHeaders: false
   },
   /*

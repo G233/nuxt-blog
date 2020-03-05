@@ -68,6 +68,8 @@ export const mutations = {
         }
       });
       state.content = md.render(data.content);
+      state.content = state.content.replace(/src/g, "data-src");
+      console.log(state.content);
     } else {
       state.content = data.content;
     }

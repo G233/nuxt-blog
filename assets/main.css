@@ -13,21 +13,3 @@ body {
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   background-color: rgb(255, 255, 255);
 }
-
-/* 移动端适配 CSS  */
-html {
-  font-size: 10vw !important;
-}
-@media (min-width: 540px) {
-  html {
-    font-size: 54px !important; /*no*/
-  }
-}
-button,
-input,
-optgroup,
-select,
-textarea {
-  font-size: initial;
-  *font-size: 100%;
-}

@@ -13,7 +13,19 @@
     <Row>
       <Col>
         <div class="article">
-          <div class="markdown-body" v-html="content"></div>
+          <img
+            style="display:none"
+            src="../../../static/Spin-1s-200px.svg"
+            alt=""
+          />
+          <div
+            v-lazy-container="{
+              selector: 'img',
+              loading: '/_nuxt/static/Spin-1s-200px.svg'
+            }"
+            class="markdown-body"
+            v-html="content"
+          ></div>
         </div>
       </Col>
     </Row>

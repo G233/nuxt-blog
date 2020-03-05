@@ -150,7 +150,4 @@ export default {
     color: $sub-color;
   }
 }
-.my {
-  float: left;
-}
 </style>
