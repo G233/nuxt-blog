@@ -68,13 +68,13 @@ onerror(app);
 app.use(logger());
 app.use(
   cors({
-    origin: ["http://blog.liuxiaogu.com"],
+    // origin: ["http://blog.liuxiaogu.com"],
     //origin: ["http://www.liuxiaogu.cn"],
     //origin: ["http://localhost:8080"], // 允许这个域名的 跨域请求
     exposeHeaders: ["WWW-Authenticate", "Server-Authorization"],
     maxAge: 5,
     credentials: true,
-    allowMethods: ["POST"],
+    allowMethods: ["POST", "GET"],
     allowHeaders: ["Content-Type", "Authorization", "Accept", "multipart"]
   })
 );
@@ -95,20 +95,7 @@ app.use(
     app
   )
 );
-app.use(
-  koaBody({
-    multipart: true, // 支持文件上传
-
-    formidable: {
-      uploadDir: "/www/front/dist/img", // 设置文件上传目录
-      keepExtensions: true, // 保持文件的后缀
-      maxFieldsSize: 2 * 1024 * 1024, // 文件上传大小
-      onFileBegin: (name, file) => {
-        // 文件上传前的设置
-      }
-    }
-  })
-);
+app.use(koaBody());
 
 app.use(require("./middlewaers/response"));
 //session

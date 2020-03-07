@@ -13,15 +13,15 @@
     <Row>
       <Col>
         <div class="article">
-          <img
+          <!-- <img
             style="display:none"
-            src="../../../static/Spin-1s-200px.svg"
+            src="../../../static/loding.svg"
             alt=""
-          />
+          /> -->
           <div
             v-lazy-container="{
               selector: 'img',
-              loading: '/_nuxt/static/Spin-1s-200px.svg'
+              loading: '../../../static/loding.svg'
             }"
             class="markdown-body"
             v-html="content"
