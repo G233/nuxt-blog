@@ -2,11 +2,11 @@
 module.exports = {
   generate: {
     async routes(callback) {
-      let res = await axios.post("https://www.liuxiaogu.com/api/getlei");
+      let res = await axios.post("http://localhost:3002/api/getlei");
       const routes1 = res.data.data.map(lei => {
         return "/home/list/" + lei._id;
       });
-      let res2 = await axios.post("https://www.liuxiaogu.com/api/getallartc");
+      let res2 = await axios.post("http://localhost:3002/api/getallartc");
       const routes2 = res2.data.data.map(artc => {
         return "/home/article/" + artc._id;
       });
@@ -43,7 +43,7 @@ module.exports = {
       {
         rel: "icon",
         type: "image/x-icon",
-        href: "./static/favicon.ico"
+        href: "./favicon.ico"
       }
     ]
   },
@@ -83,7 +83,7 @@ module.exports = {
     scss: "./assets/index.scss"
   },
   axios: {
-    browserBaseURL: "https://119.29.177.240/api"
+    browserBaseURL: "https://www.liuxiaogu.com/api"
     // proxyHeaders: false
   },
   /*

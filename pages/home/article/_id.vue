@@ -20,8 +20,7 @@
           /> -->
           <div
             v-lazy-container="{
-              selector: 'img',
-              loading: '../../../static/loding.svg'
+              selector: 'img'
             }"
             class="markdown-body"
             v-html="content"
