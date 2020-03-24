@@ -1,4 +1,4 @@
-// import axios from "axios";
+import axios from "axios";
 module.exports = {
   generate: {
     async routes(callback) {
@@ -31,7 +31,7 @@ module.exports = {
       },
       {
         name: "viewport",
-        content: "width=device-width, initial-scale=1"
+        content: "width=device-width, initial-scale=1,user-scalable=no"
       },
       {
         hid: "description",
@@ -78,7 +78,17 @@ module.exports = {
   /*
    ** Nuxt.js modules
    */
-  modules: ["@nuxtjs/axios", "@nuxtjs/style-resources"],
+  modules: [
+    "@nuxtjs/axios",
+    "@nuxtjs/style-resources",
+    [
+      "@nuxtjs/component-cache",
+      {
+        max: 10000,
+        maxAge: 1000 * 60 * 60
+      }
+    ]
+  ],
   styleResources: {
     scss: "./assets/index.scss"
   },
@@ -90,6 +100,8 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    // analyze: true,
+    cache: true,
     /*
      ** You can extend webpack config here
      */

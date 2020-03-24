@@ -132,8 +132,8 @@ export default {
   width: 95vw;
   margin: auto;
   max-width: 15rem;
-  padding-left: 0.6rem;
-  padding-right: 0.6rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
   padding-top: 0.2rem;
   box-shadow: 8px 28px 50px rgba(39, 44, 49, 0.07),
     1px 6px 12px rgba(39, 44, 49, 0.04);

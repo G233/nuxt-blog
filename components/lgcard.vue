@@ -36,13 +36,12 @@ export default {
 <style scoped>
 .card {
   background-color: white;
-  padding: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  padding: 0.4rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
   border-radius: 5px;
   transition: all 0.2s ease-in-out;
 }
-
 .cardt {
   font-size: 19px;
   font-weight: bold;

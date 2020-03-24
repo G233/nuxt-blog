@@ -73,6 +73,7 @@ export default {
     this.$store.dispatch("getarticle", { id: this.$route.params.id });
   },
   async asyncData({ store, params }) {
+    console.log("aaaaaa");
     await store.dispatch("getarticle", { id: params.id });
   },
   // 还有问题
