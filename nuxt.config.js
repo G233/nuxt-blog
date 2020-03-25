@@ -2,11 +2,11 @@ import axios from "axios";
 module.exports = {
   generate: {
     async routes(callback) {
-      let res = await axios.post("http://localhost:3002/api/getlei");
+      let res = await axios.post("https://www.liuxiaogu.com/api/getlei");
       const routes1 = res.data.data.map(lei => {
         return "/home/list/" + lei._id;
       });
-      let res2 = await axios.post("http://localhost:3002/api/getallartc");
+      let res2 = await axios.post("https://www.liuxiaogu.com/api/getallartc");
       const routes2 = res2.data.data.map(artc => {
         return "/home/article/" + artc._id;
       });
