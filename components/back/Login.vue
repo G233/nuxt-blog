@@ -92,6 +92,6 @@ export default {
 </script>
 <style scoped>
 .youxiang {
-  margin-top: 1rem;
+  margin-top: 60px;
 }
 </style>

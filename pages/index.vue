@@ -101,8 +101,8 @@ export default {
   height: 60px;
   width: 95vw;
   margin: auto;
-  max-width: 15rem;
-  margin-bottom: 0.3rem;
+  max-width: 900px;
+  margin-bottom: 18px;
   .lei-list {
     display: flex;
     justify-content: flex-start;
@@ -110,7 +110,7 @@ export default {
     .lei-text {
       cursor: pointer;
       color: $sub-color;
-      margin-left: 0.3rem;
+      margin-left: 18px;
       font-size: 15px;
     }
     .lei-text:hover {
@@ -131,17 +131,17 @@ export default {
   overflow: hidden;
   width: 95vw;
   margin: auto;
-  max-width: 15rem;
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
-  padding-top: 0.2rem;
+  max-width: 900px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 12px;
   box-shadow: 8px 28px 50px rgba(39, 44, 49, 0.07),
     1px 6px 12px rgba(39, 44, 49, 0.04);
 }
 .top-text {
   text-align: center;
   margin: 30px;
-  margin-top: 2rem;
+  margin-top: 120px;
   h1 {
     color: $title-color;
   }

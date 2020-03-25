@@ -53,9 +53,9 @@ export default {
 .body {
   width: 95vw;
   margin: auto;
-  margin-top: 3rem;
-  max-width: 15rem;
-  padding-top: 0.2rem;
+  margin-top: 180px;
+  max-width: 900px;
+  padding-top: 12px;
   box-shadow: 8px 28px 50px rgba(39, 44, 49, 0.07),
     1px 6px 12px rgba(39, 44, 49, 0.04);
   min-height: 1000px;

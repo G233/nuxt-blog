@@ -36,9 +36,9 @@ export default {
 <style scoped>
 .card {
   background-color: white;
-  padding: 0.4rem;
-  margin-top: 0.4rem;
-  margin-bottom: 0.4rem;
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   border-radius: 5px;
   transition: all 0.2s ease-in-out;
 }

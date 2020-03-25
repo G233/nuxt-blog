@@ -94,9 +94,9 @@ export default {
   max-width: 900px;
   margin: auto;
 
-  padding: 0.3rem;
+  padding: 18px;
   min-height: 1000px;
-  padding-bottom: 1rem;
+  padding-bottom: 60px;
 }
 
 .dateclass {

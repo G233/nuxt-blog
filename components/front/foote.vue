@@ -21,8 +21,8 @@ export default {
 
 <style scoped>
 .foote {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 a {
   display: block;

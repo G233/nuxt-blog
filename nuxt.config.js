@@ -16,7 +16,7 @@ module.exports = {
   },
   server: {
     port: 3002
-    // host: "192.168.0.120"
+    // host: "192.168.0.108"
   },
   // other configs
   mode: "universal",
@@ -62,11 +62,6 @@ module.exports = {
     "assets/flexible.css"
   ],
 
-  postcss: [
-    require("postcss-px2rem")({
-      remUnit: 75
-    })
-  ],
   /*
    ** Plugins to load before mounting the App
    */
@@ -101,7 +96,12 @@ module.exports = {
    */
   build: {
     // analyze: true,
-    cache: true,
+    // cache: true,
+    postcss: [
+      require("postcss-px2rem")({
+        remUnit: 50
+      })
+    ],
     /*
      ** You can extend webpack config here
      */

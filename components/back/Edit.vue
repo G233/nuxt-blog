@@ -274,7 +274,7 @@ export default {
 .abstract-text {
   width: 50%;
   margin: 0 auto;
-  margin-bottom: 1rem;
+  margin-bottom: 60px;
 }
 .mavonEditor {
   width: 95%;
@@ -285,8 +285,8 @@ export default {
   height: 85vh;
 }
 .edit-title {
-  padding: 2rem;
-  padding-bottom: 1rem;
+  padding: 120px;
+  padding-bottom: 60px;
   width: 100%;
 }
 
