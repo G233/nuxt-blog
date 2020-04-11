@@ -53,7 +53,7 @@ export const mutations = {
   },
   changearticle(state, data) {
     if (!data.istrue) {
-      var hljs = require("highlight.js");
+      var hljs = require("../assets/highlight.pack");
       var md = require("markdown-it")({
         html: true,
         linkify: true,

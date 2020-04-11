@@ -93,7 +93,6 @@ export default {
   width: 95%;
   max-width: 900px;
   margin: auto;
-
   padding: 18px;
   min-height: 1000px;
   padding-bottom: 60px;
