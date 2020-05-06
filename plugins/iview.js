@@ -19,9 +19,6 @@ import {
   Select,
   Option
 } from "view-design";
-
-import VueClipboard from "vue-clipboard2";
-
 Vue.component("Button", Button);
 Vue.component("Row", Row);
 Vue.component("Col", Col);
@@ -40,5 +37,3 @@ Vue.component("Poptip", Poptip);
 Vue.component("Select", Select);
 Vue.component("Option", Option);
 Vue.prototype.$Message = Message;
-
-Vue.use(VueClipboard);

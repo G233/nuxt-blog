@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showpage">
+  <div>
     <Row class-name="title" type="flex" justify="center" align="middle">
       <Col>
         <h2>{{ title }}</h2>
@@ -13,11 +13,6 @@
     <Row>
       <Col>
         <div class="article">
-          <!-- <img
-            style="display:none"
-            src="../../../static/loding.svg"
-            alt=""
-          /> -->
           <div
             v-lazy-container="{
               selector: 'img'
@@ -69,7 +64,7 @@ export default {
     }
   },
 
-  created() {
+  mounted() {
     this.$store.dispatch("getarticle", { id: this.$route.params.id });
   },
   async asyncData({ store, params }) {

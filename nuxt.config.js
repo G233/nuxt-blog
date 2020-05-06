@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 module.exports = {
   generate: {
     async routes(callback) {
@@ -66,24 +66,14 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    "@/plugins/iview",
-    { src: "@/plugins/vue-mavon-editor", srr: false },
-    { src: "~/plugins/vue-lazyload.js", ssr: false }
+    { src: "@/plugins/iview" },
+    { src: "@/plugins/vue-mavon-editor", mode: "client" },
+    { src: "~/plugins/vue-lazyload.js", mode: "client" }
   ],
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    "@nuxtjs/axios",
-    "@nuxtjs/style-resources",
-    [
-      "@nuxtjs/component-cache",
-      {
-        max: 10000,
-        maxAge: 1000 * 60 * 60
-      }
-    ]
-  ],
+  modules: ["@nuxtjs/axios", "@nuxtjs/style-resources"],
   styleResources: {
     scss: "./assets/index.scss"
   },
@@ -95,6 +85,7 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    transpile: [/view-design/],
     // analyze: true,
     // cache: true,
     postcss: [
@@ -102,6 +93,17 @@ module.exports = {
         remUnit: 50
       })
     ],
+    babel: {
+      plugins: [
+        [
+          "import",
+          {
+            libraryName: "view-design",
+            libraryDirectory: "src/components"
+          }
+        ]
+      ]
+    },
     /*
      ** You can extend webpack config here
      */
