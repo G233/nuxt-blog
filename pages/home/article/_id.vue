@@ -65,11 +65,21 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("getarticle", { id: this.$route.params.id });
+    // this.$store.dispatch("getarticle", { id: this.$route.params.id });
   },
-  async asyncData({ store, params }) {
-    console.log("aaaaaa");
-    await store.dispatch("getarticle", { id: params.id });
+  async asyncData({ $axios, store, params }) {
+    let res;
+    if (process.server) {
+      res = await $axios.post("api/getarticle", {
+        id: params.id
+      });
+      store.commit("changearticle", res.data.data);
+    } else {
+      res = await $axios.post("getarticle", {
+        id: params.id
+      });
+      store.commit("changearticle", res.data.data);
+    }
   },
   // 还有问题
 

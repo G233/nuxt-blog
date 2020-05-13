@@ -1,7 +1,7 @@
-// import axios from "axios";
 module.exports = {
   generate: {
     async routes(callback) {
+      const axios = require("axios");
       let res = await axios.post("http://localhost:3002/api/getlei");
       const routes1 = res.data.data.map(lei => {
         return "/home/list/" + lei._id;
@@ -24,6 +24,9 @@ module.exports = {
    ** Headers of the page
    */
   head: {
+    htmlAttrs: {
+      lang: "zh"
+    },
     title: process.env.npm_package_name || "",
     meta: [
       {
@@ -73,13 +76,15 @@ module.exports = {
   /*
    ** Nuxt.js modules
    */
-  modules: ["@nuxtjs/axios", "@nuxtjs/style-resources"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/style-resources", "@nuxtjs/pwa"],
   styleResources: {
     scss: "./assets/index.scss"
   },
   axios: {
-    browserBaseURL: "https://www.liuxiaogu.com/api"
+    browserBaseURL: "https://www.liuxiaogu.com/api",
+    // browserBaseURL: "http://localhost:3002/api",
     // proxyHeaders: false
+    credentials: true
   },
   /*
    ** Build configuration

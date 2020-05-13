@@ -1,7 +1,11 @@
+import hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
+import css from "highlight.js/lib/languages/css";
+import xml from "highlight.js/lib/languages/xml";
 export const state = () => ({
   isfirst: true,
   showpage: false,
-  authUser: false,
+  // authUser: false,
   counter: 0,
   userid: null,
   content: "",
@@ -53,7 +57,9 @@ export const mutations = {
   },
   changearticle(state, data) {
     if (!data.istrue) {
-      var hljs = require("../assets/highlight.pack");
+      hljs.registerLanguage("javascript", javascript);
+      hljs.registerLanguage("css", css);
+      hljs.registerLanguage("xml", xml);
       var md = require("markdown-it")({
         html: true,
         linkify: true,
@@ -86,11 +92,11 @@ export const mutations = {
 
 export const actions = {
   // nuxtServerInit is called by Nuxt.js before server-rendering every page
-  nuxtServerInit({ commit }, { req }) {
-    // if (req.session && req.session.userid) {
-    //   commit('SET_USER', req.session.userid)
-    // }
-  },
+  // nuxtServerInit({ commit }, { req }) {
+  //   // if (req.session && req.session.userid) {
+  //   //   commit('SET_USER', req.session.userid)
+  //   // }
+  // },
   async getarticle({ commit }, { id }) {
     try {
       const res = await this.$axios.post("/getarticle", {
