@@ -20,6 +20,9 @@ export const state = () => ({
 });
 
 export const mutations = {
+  SET_FIRST(state) {
+    state.isfirst = false;
+  },
   SET_USER(state, user) {
     state.authUser = user;
   },
@@ -64,11 +67,11 @@ export const mutations = {
         html: true,
         linkify: true,
         typographer: true,
-        highlight: function(str, lang) {
+        highlight: function (str, lang) {
           if (lang && hljs.getLanguage(lang)) {
             try {
               return hljs.highlight(lang, str).value;
-            } catch (__) {}
+            } catch (__) { }
           }
           return ""; // 使用额外的默认转义
         }
@@ -103,6 +106,6 @@ export const actions = {
         id: id
       });
       commit("changearticle", res.data.data);
-    } catch (e) {}
+    } catch (e) { }
   }
 };

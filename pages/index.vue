@@ -51,19 +51,21 @@ export default {
           list: res2.data.data
         };
       } else {
-        // if (app.store.state.isfirst) {
-        //   res2 = await $axios.post("/recent");
-        //   app.store.commit("tohome");
-        //   return {
-        //     list: res2.data.data
-        //   };
-        // }
+        if (app.store.state.isfirst) {
+          res2 = await $axios.post("/recent");
+          app.store.commit("tohome");
+          return {
+            list: res2.data.data
+          };
+        }
       }
     } catch (e) {
       console.log(e);
     }
   },
-  async created() {},
+  async mounted() {
+    this.$store.commit("SET_FIRST");
+  },
   computed: {
     classify() {
       return this.$store.state.list;

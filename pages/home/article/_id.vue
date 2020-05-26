@@ -81,6 +81,24 @@ export default {
       store.commit("changearticle", res.data.data);
     }
   },
+  // async fetch() {
+  //   try {
+  //     let res;
+  //     if (process.client) {
+  //       res = await this.$axios.post("getarticle", {
+  //         id: this.$route.params.id
+  //       });
+  //     } else {
+  //       res = await this.$axios.post("api/getarticle", {
+  //         id: this.$route.params.id
+  //       });
+  //     }
+
+  //     this.$store.commit("changearticle", res.data.data);
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // },
   // 还有问题
 
   methods: {}
