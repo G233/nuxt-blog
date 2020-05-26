@@ -1,12 +1,33 @@
 <template>
-  <div style="width:100%">
-    <div style="  margin-bottom:40px">
-      <Row type="flex" justify="center" class-name="edit-title">
-        <Col span="12" style="font-weight:bold">
-          <Input v-model="title" size="large" placeholder="请输入标题"></Input>
-        </Col>
-      </Row>
-      <Row class-name="lan" type="flex" justify="space-around">
+  <div class="edit">
+    <div class="edit-title">
+      <Input v-model="title" size="large" placeholder="请输入标题"></Input>
+    </div>
+    <div class="addlabel">
+      <Tag
+        v-for="item in label"
+        :key="item"
+        :name="item"
+        closable
+        @on-close="handleClose"
+        >{{ item }}</Tag
+      >
+      <Dropdown>
+        <Button type="primary">
+          添加标签
+          <Icon type="ios-arrow-down"></Icon>
+        </Button>
+        <DropdownMenu slot="list">
+          <div @click="handleAdd(item.name)" v-for="item in alllabel">
+            <DropdownItem>{{ item.name }}</DropdownItem>
+          </div>
+          <div @click="addlabel">
+            <DropdownItem divided>新建标签</DropdownItem>
+          </div>
+        </DropdownMenu>
+      </Dropdown>
+    </div>
+    <!-- <Row class-name="lan" type="flex" justify="space-around">
         <Col span="">
           <Input
             v-if="!switchs"
@@ -38,27 +59,25 @@
         <Col>
           <Button v-if="ishas" @click="modal = true" type="error">删除</Button>
         </Col>
-      </Row>
-    </div>
-    <div class="abstract-text">
+      </Row> -->
+
+    <!-- <div class="abstract-text">
       <Input
         v-model="abstract"
         type="textarea"
         :rows="10"
         placeholder="这里输入摘要"
       />
-    </div>
+    </div> -->
 
     <Row>
       <Col>
         <div class="mavonEditor">
-          <no-ssr>
-            <mavon-editor
-              class="v-note-wrapper"
-              :toolbars="toolbars"
-              v-model="content"
-            />
-          </no-ssr>
+          <mavon-editor
+            class="v-note-wrapper"
+            :toolbars="toolbars"
+            v-model="content"
+          />
         </div>
       </Col>
     </Row>
@@ -80,6 +99,9 @@ export default {
   components: {},
   data() {
     return {
+      alllabel: [],
+      newlable: "",
+      label: [],
       modal: false,
       img_file: [],
       toolbars: {
@@ -163,8 +185,61 @@ export default {
       return this.$refs.myQuillEditor.quill;
     }
   },
-  created() {},
+  created() {
+    this.refresh();
+    this.getAllLabel();
+  },
   methods: {
+    addlabel() {
+      this.$Modal.confirm({
+        render: h => {
+          return h("Input", {
+            props: {
+              value: this.value,
+              autofocus: true,
+              placeholder: "输入新的标签吧"
+            },
+            on: {
+              input: val => {
+                this.newlable = val;
+              }
+            }
+          });
+        },
+        onOk: () => {
+          this.addnewlabel();
+        },
+        loading: true
+      });
+    },
+    async getAllLabel() {
+      let res = await this.$axios.post("/v2/getAllLabel");
+      console.log(res);
+      this.alllabel = res.data.data;
+      return;
+    },
+    async addnewlabel() {
+      let res = await this.$axios.post("/v2/addlabel", { name: this.newlable });
+      if (res.data.code === 201) {
+        this.$Message.error(res.data.msg);
+      } else {
+        await this.getAllLabel();
+        this.$Message.success("添加成功");
+      }
+      this.$Modal.remove();
+    },
+    handleClose(event, name) {
+      const index = this.label.indexOf(name);
+      this.label.splice(index, 1);
+    },
+    handleAdd(name) {
+      console.log(name);
+      if (this.label.indexOf(name) === -1) {
+        this.label.push(name);
+      } else {
+        this.$Message.warning("请不要重复选择标签");
+      }
+    },
     async deleteat() {
       let res = await this.$axios.post("/deleteat", {
         atid: this.atid,
@@ -270,14 +345,17 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
+.edit {
+  margin: auto;
+  width: 95%;
+}
 .abstract-text {
   width: 50%;
   margin: 0 auto;
   margin-bottom: 60px;
 }
 .mavonEditor {
-  width: 95%;
   margin: auto;
 }
 .v-note-wrapper {
@@ -285,9 +363,17 @@ export default {
   height: 85vh;
 }
 .edit-title {
-  padding: 120px;
-  padding-bottom: 60px;
-  width: 100%;
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  input {
+    font-weight: bold;
+    font-size: 24px;
+  }
+}
+.addlabel {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .add {

@@ -13,6 +13,11 @@ const ArticleSchema = new Schema(
       ref: "Lei", //这里要写你指向的数据库表名字,
       autopopulate: true
     },
+    label: [{
+      type: Schema.Types.ObjectId,
+      ref: "Label", //这里要写你指向的数据库表名字,
+      autopopulate: true
+    }],
     content: String,
     title: String,
     abstract: String

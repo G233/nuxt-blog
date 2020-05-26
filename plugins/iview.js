@@ -17,7 +17,11 @@ import {
   Modal,
   Poptip,
   Select,
-  Option
+  Option,
+  DropdownMenu,
+  DropdownItem,
+  Dropdown,
+  Tag,
 } from "view-design";
 Vue.component("Button", Button);
 Vue.component("Row", Row);
@@ -36,4 +40,11 @@ Vue.component("Modal", Modal);
 Vue.component("Poptip", Poptip);
 Vue.component("Select", Select);
 Vue.component("Option", Option);
+Vue.component("DropdownMenu", DropdownMenu);
+Vue.component("DropdownItem", DropdownItem);
+Vue.component("Dropdown", Dropdown);
+Vue.component("Tag", Tag);
+
+
 Vue.prototype.$Message = Message;
+Vue.prototype.$Modal = Modal;

@@ -68,10 +68,10 @@ onerror(app);
 app.use(logger());
 app.use(
   cors({
-    origin: ["https://blog.liuxiaogu.com"],
+    origin: ["*"],
     //origin: ["http://www.liuxiaogu.cn"],
     //origin: ["http://localhost:8080"], // 允许这个域名的 跨域请求
-    credentials: true,
+    // credentials: true,
     // exposeHeaders: ["WWW-Authenticate", "Server-Authorization"],
     maxAge: 1728000,
     credentials: true,

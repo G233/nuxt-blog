@@ -22,10 +22,18 @@ router
   .post("/api/getarticle1", Article.getarticle1)
   .post("/api/updatearticle", Article.updatearticle)
   .post("/api/recent", Article.recent)
-  .get("/api/recent", Article.recent)
   .post("/api/addimg", Article.addimg)
   .post("/api/deleteat", Article.deleteat)
-  .post("/api/getlists", Article.getlists);
+  .post("/api/getlists", Article.getlists)
+  .post("/api/v2/addlabel", Article.addLabel)
+  .post("/api/v2/getAllLabel", Article.getAllLabel);
+
+
+
+
+
+
+
 //aaaa
 
 module.exports = router;

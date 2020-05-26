@@ -76,15 +76,15 @@ module.exports = {
   /*
    ** Nuxt.js modules
    */
-  modules: ["@nuxtjs/axios", "@nuxtjs/style-resources", "@nuxtjs/pwa"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/style-resources"],
   styleResources: {
     scss: "./assets/index.scss"
   },
   axios: {
-    browserBaseURL: "https://www.liuxiaogu.com/api",
-    // browserBaseURL: "http://localhost:3002/api",
+    // browserBaseURL: "https://www.liuxiaogu.com/api",
+    browserBaseURL: "http://localhost:3002/api",
     // proxyHeaders: false
-    credentials: true
+    // credentials: true
   },
   /*
    ** Build configuration

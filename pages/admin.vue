@@ -11,10 +11,12 @@
       </div>
 
       <Col span="18">
-        <Button class="nginx" @click="tonginx" type="primary">Nginx</Button>
         <div class="edit">
-          <Edit></Edit>
+          <client-only>
+            <Edit></Edit>
+          </client-only>
         </div>
+        <Button class="nginx" @click="tonginx" type="primary">Nginx</Button>
       </Col>
     </Row>
   </div>
