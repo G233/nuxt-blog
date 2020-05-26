@@ -63,7 +63,9 @@ export default {
       console.log(e);
     }
   },
-  async created() {},
+  async mounted() {
+    this.$store.commit("SET_FIRST");
+  },
   computed: {
     classify() {
       return this.$store.state.list;

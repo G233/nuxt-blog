@@ -68,13 +68,14 @@ onerror(app);
 app.use(logger());
 app.use(
   cors({
-    origin: ["*"],
+    origin: ["https://blog.liuxiaogu.com"],
     //origin: ["http://www.liuxiaogu.cn"],
     //origin: ["http://localhost:8080"], // 允许这个域名的 跨域请求
-    exposeHeaders: ["WWW-Authenticate", "Server-Authorization"],
-    maxAge: 5,
     credentials: true,
-    allowMethods: ["POST", "GET"],
+    // exposeHeaders: ["WWW-Authenticate", "Server-Authorization"],
+    maxAge: 1728000,
+    credentials: true,
+    allowMethods: ["POST", "GET", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization", "Accept", "multipart"]
   })
 );
@@ -83,7 +84,7 @@ app.use(
     {
       key: "lxg",
       overwrite: true, //覆写Cookie
-      httpOnly: true, //不允许通过 JS 来更改
+      httpOnly: false, //不允许通过 JS 来更改
       renew: true, //会话快到期时续订，可以保持用户一直登陆a
       store: new MongooseStore({
         createIndexes: "appSessions",
