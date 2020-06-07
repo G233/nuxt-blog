@@ -26,13 +26,8 @@ router
   .post("/api/deleteat", Article.deleteat)
   .post("/api/getlists", Article.getlists)
   .post("/api/v2/addlabel", Article.addLabel)
-  .post("/api/v2/getAllLabel", Article.getAllLabel);
-
-
-
-
-
-
+  .post("/api/v2/getAllLabel", Article.getAllLabel)
+  .post("/api/v2/addArticle", Article.addArticle);
 
 //aaaa
 
