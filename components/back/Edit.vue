@@ -26,7 +26,10 @@
           </div>
         </DropdownMenu>
       </Dropdown>
+      <Button type="success" @click="commit">发表</Button>
+      <Button v-if="ishas" @click="modal = true" type="error">删除</Button>
     </div>
+
     <!-- <Row class-name="lan" type="flex" justify="space-around">
         <Col span="">
           <Input
@@ -99,6 +102,10 @@ export default {
   components: {},
   data() {
     return {
+      // content:'',
+      // title:'',
+      // abstract:'',
+      newArticle: true,
       alllabel: [],
       newlable: "",
       label: [],
@@ -263,12 +270,6 @@ export default {
       this.switchs = !this.switchs;
       this.lei = "";
     },
-    onEditorReady(editor) {
-      // 准备编辑器
-    },
-    onEditorBlur() {}, // 失去焦点事件
-    onEditorFocus() {}, // 获得焦点事件
-    onEditorChange() {}, // 内容改变事件
     async commit() {
       if (!this.switchs) {
         if (!this.lei) {
@@ -291,43 +292,48 @@ export default {
         }
       } else {
         if (!this.content) {
-          this.$Message.error("麻烦写个字");
-        } else if (!this.lei) {
-          this.$Message.error("麻烦选个类");
+          this.$Message.error("请输入文章内容");
         } else if (!this.title) {
-          this.$Message.error("麻烦写标题");
+          this.$Message.error("请输入标题");
         } else {
           let data = {
-            lei: this.lei,
             content: this.content,
             title: this.title,
-            userid: this.userId,
+            author: this.userId,
             atid: this.atid,
-            abstract: this.abstract
+            abstract: this.abstract,
+            labels: this.label
           };
-
           //判断更新还是新建
-          if (this.ishas) {
-            this.$axios
-              .post("/updatearticle", data)
-              .then(res => {
-                this.$Message.success(res.data.msg);
-                this.refuselist();
-              })
-              .catch();
+          if (!this.newArticle) {
+            // this.$axios
+            //   .post("/updatearticle", data)
+            //   .then(res => {
+            //     this.$Message.success(res.data.msg);
+            //     this.refuselist();
+            //   })
+            //   .catch();
+            let res = await this.$axios.post("/v2/updateArticle", data);
+            this.$Message.success(res.data.msg);
           } else {
-            this.$axios
-              .post("/newarticle", data)
-              .then(res => {
-                if (res.data.code == 201) {
-                  this.$Message.error(res.data.msg);
-                  return;
-                }
-                this.refuselist();
-                this.$Message.success(res.data.msg);
-                this.switchs = !this.switchs;
-              })
-              .catch();
+            // this.$axios
+            //   .post("/newarticle", data)
+            //   .then(res => {
+            //     if (res.data.code == 201) {
+            //       this.$Message.error(res.data.msg);
+            //       return;
+            //     }
+            //     this.refuselist();
+            //     this.$Message.success(res.data.msg);
+            //     this.switchs = !this.switchs;  })
+            //   .catch();
+            let res = await this.$axios.post("/v2/addArticle", data);
+            if (res.data.code == 201) {
+              this.$Message.error(res.data.msg);
+              return;
+            }
+            // this.refuselist();
+            this.$Message.success(res.data.msg);
           }
         }
       }

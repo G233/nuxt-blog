@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const UserModel = mongoose.model("User");
 const ArticleModel = mongoose.model("Article");
 const LeiModel = mongoose.model("Lei");
-const ArticleService = require('../../service/article')
+const ArticleService = require("../../service/article");
 
 class Article {
   static async addlei(ctx) {
@@ -56,13 +56,13 @@ class Article {
         console.log("正在添加摘要");
         abstract = content.replace(/#/g, "").replace(/\*/g, "");
       }
-    } catch (e) { }
+    } catch (e) {}
     try {
       if (abstract.length < 50) {
         console.log("正在添加摘要");
         abstract = content.replace(/#/g, "").replace(/\*/g, "");
       }
-    } catch (e) { }
+    } catch (e) {}
 
     await ArticleModel.findOneAndUpdate(
       { _id: atid },
@@ -88,7 +88,7 @@ class Article {
     let List;
     try {
       List = await LeiModel.find({});
-    } catch (e) { }
+    } catch (e) {}
     return ctx.success({ data: List });
   }
   static async refuselist() {
@@ -131,24 +131,48 @@ class Article {
     return ctx.success({ data: list, msg: listname.name });
   }
 
-
-
-
-
   static async addArticle(ctx) {
-    let { id } = ctx.request.body;
-    let listname = await LeiModel.findById(id);
-    let list = await ArticleModel.find({ lei: id }).sort({ createdAt: -1 });
-    return ctx.success({ data: list, msg: listname.name });
+    let articleData = ctx.request.body;
+    if (await ArticleService.hasArticle(articleData.title)) {
+      return ctx.error({ msg: "文章标题重复啦" });
+    }
+    // 将标签名转换为 ID
+    articleData.labels = await ArticleService.afterLaber(articleData.labels);
+    // 添加摘要
+    articleData.abstract = await ArticleService.updateAbstract(
+      articleData.content
+    );
+    // Markdown 转 HTML
+    articleData.aftercontent = await ArticleService.MarkdownToHtml(
+      articleData.content
+    );
+
+    await ArticleService.saveArticle(articleData);
+
+    return ctx.success({ msg: "文章发表好了" });
+  }
+  static async updateArticle(ctx) {
+    // 将标签名转换为 ID
+    articleData.labels = await ArticleService.afterLaber(articleData.labels);
+    // 添加摘要
+    articleData.abstract = await ArticleService.updateAbstract(
+      articleData.content
+    );
+    // Markdown 转 HTML
+    articleData.aftercontent = await ArticleService.MarkdownToHtml(
+      articleData.content
+    );
+
+    await ArticleService.saveArticle(articleData);
   }
   static async addLabel(ctx) {
     let { name } = ctx.request.body;
-    let { msg, flag } = await ArticleService.addLabel(name)
-    return flag ? ctx.success({ msg: msg }) : ctx.error({ msg: msg })
+    let { msg, flag } = await ArticleService.addLabel(name);
+    return flag ? ctx.success({ msg: msg }) : ctx.error({ msg: msg });
   }
   static async getAllLabel(ctx) {
-    let labels = await ArticleService.getAllLabel()
-    return ctx.success({ data: labels })
+    let labels = await ArticleService.getAllLabel();
+    return ctx.success({ data: labels });
   }
 }
 module.exports = Article;

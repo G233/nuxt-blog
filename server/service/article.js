@@ -4,27 +4,62 @@ const ArticleModel = mongoose.model("Article");
 const LeiModel = mongoose.model("Lei");
 const LabelModel = mongoose.model("Label");
 class ArticleService {
-  static async addArticle(data) {
-    let { lei, content, title, userid, abstract } = data;
-    if (abstract.length < 10) {
-      abstract = content.replace(/#/g, "").replace(/\*/g, "");
-    }
-    let hasA = await ArticleModel.findOne({ author: userid, title: title });
-    if (hasA) {
-      return ctx.error({ msg: "标题重复" });
-    }
-    let alei = await LeiModel.findOne({ name: lei });
-    let aa = await ArticleModel.create({
-      lei: alei._id,
+  // 储存新文章
+  static async saveArticle(data) {
+    const { content, title, userid, abstract, labels, aftercontent } = data;
+    return await ArticleModel.create({
+      labels: labels,
       content: content,
       title: title,
       author: userid,
-      abstract: abstract
+      abstract: abstract,
+      aftercontent: aftercontent
     });
-    console.log(aa);
-    Article.refuselist(userid);
-    return ctx.success({ msg: "文章新建成功" });
   }
+  // 判断文章是否存在
+  static async hasArticle(title) {
+    const hasA = await ArticleModel.findOne({ title: title });
+    return hasA ? true : false;
+  }
+  // 转换标签
+  static async afterLaber(labels) {
+    let Labels = [];
+    for (let x of labels) {
+      let La = await LabelModel.findOne({ name: x });
+      Labels.push(La._id);
+    }
+    return Labels;
+  }
+  // 更新摘要
+  static updateAbstract(data) {
+    const abstract = data
+      .replace(/#/g, "")
+      .replace(/\*/g, "")
+      .replace(/\s/g, "")
+      .slice(0, 400);
+    console.log(abstract);
+    return abstract;
+  }
+
+  static async MarkdownToHtml(html) {
+    let hljs = require("highlight.js");
+    let md = require("markdown-it")({
+      html: true,
+      linkify: true,
+      typographer: true,
+      highlight: function(str, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+          try {
+            return hljs.highlight(lang, str).value;
+          } catch (__) {}
+        }
+        return ""; // 使用额外的默认转义
+      }
+    });
+    // 添加图片懒加载所需字段
+    return md.render(html).replace(/src/g, "data-src");
+  }
+  static async updateArticle(data) {}
   static async addLabel(name) {
     if (await this.hasLabel(name)) {
       return {
@@ -69,6 +104,9 @@ class ArticleService {
     } catch (e) {
       console.log(e);
     }
+  }
+  static async updateArticle(data) {
+    await ArticleModel.findByIdAndUpdate({ _id: data.atid }, { data });
   }
 }
 module.exports = ArticleService;
