@@ -71,15 +71,16 @@ export default {
           //   passwd: this.formCustom.passwd,
           //     email: this.formCustom.mail
           // })
-          this.$axios.post("/login", data).then(res => {
+          this.$axios.post("/v2/Login", data).then(res => {
             if (res.data.code == 201) {
               this.$Message.error("邮箱或密码错误");
             } else {
-              this.$store.commit("SET_USER", res.data.data);
-              this.$Message.success("登陆成功");
+              console.log(res.data.data);
+
+              localStorage.setItem("token", res.data.data.token);
+              this.$store.commit("SET_USER", res.data.data.token);
 
               this.$router.push("/admin");
-              this.$Message.success("正在跳转");
             }
           });
         } else {

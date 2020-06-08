@@ -1,28 +1,43 @@
 <template>
   <div>
-    <Row class-name="title" type="flex" justify="center" align="middle">
-      <Col>
-        <h2>{{ title }}</h2>
-      </Col>
-    </Row>
-    <Row class-name="dateclass" type="flex" justify="center" align="middle">
-      <Col>
-        <h6>发表于：{{ date }}</h6>
-      </Col>
-    </Row>
-    <Row>
-      <Col>
-        <div class="article">
-          <div
-            v-lazy-container="{
-              selector: 'img'
-            }"
-            class="markdown-body"
-            v-html="content"
-          ></div>
-        </div>
-      </Col>
-    </Row>
+    <div v-show="!articleData.title" class="loding">
+      <Spin size="large"></Spin>
+    </div>
+    <div v-show="articleData.title">
+      <Row class-name="title" type="flex" justify="center" align="middle">
+        <Col>
+          <h2>{{ articleData.title }}</h2>
+        </Col>
+      </Row>
+      <Row class-name="dateclass" type="flex" justify="center" align="middle">
+        <Col>
+          <h6>发表于：{{ date }}</h6>
+        </Col>
+        <Col>
+          <Button
+            v-if="authUser"
+            style="margin-left:50px"
+            type="primary"
+            @click="changeArticle"
+          >
+            修改
+          </Button></Col
+        >
+      </Row>
+      <Row>
+        <Col>
+          <div class="article">
+            <div
+              v-lazy-container="{
+                selector: 'img'
+              }"
+              class="markdown-body"
+              v-html="articleData.aftercontent"
+            ></div>
+          </div>
+        </Col>
+      </Row>
+    </div>
   </div>
 </template>
 
@@ -39,10 +54,16 @@ export default {
   data() {
     return {
       dm: true,
-      yinying: false
+      yinying: false,
+      articleData: {
+        createdAt: "" // 避免 split 报错
+      }
     };
   },
   computed: {
+    authUser() {
+      return this.$store.state.authUser;
+    },
     showpage() {
       return this.$store.state.showpage;
     },
@@ -51,57 +72,36 @@ export default {
       return data;
     },
     date() {
-      return this.$store.state.date;
-    },
-    title() {
-      return this.$store.state.title;
-    },
-    content() {
-      return this.$store.state.content;
-    },
-    date() {
-      return this.$store.state.date;
+      return this.articleData.createdAt.split("T")[0];
     }
   },
-
-  mounted() {
-    // this.$store.dispatch("getarticle", { id: this.$route.params.id });
-  },
-  async asyncData({ $axios, store, params }) {
-    let res;
-    if (process.server) {
-      res = await $axios.post("api/getarticle", {
-        id: params.id
+  beforeMount() {
+    // 预加载 recent 数据
+    const recentArticle = this.$store.state.recentArticle;
+    if (!recentArticle) {
+      let res = this.$axios.post("/v2/Recent").then(res => {
+        this.$store.commit("SET_RECENT", res.data.data);
       });
-      store.commit("changearticle", res.data.data);
-    } else {
-      res = await $axios.post("getarticle", {
-        id: params.id
-      });
-      store.commit("changearticle", res.data.data);
     }
   },
-  // async fetch() {
-  //   try {
-  //     let res;
-  //     if (process.client) {
-  //       res = await this.$axios.post("getarticle", {
-  //         id: this.$route.params.id
-  //       });
-  //     } else {
-  //       res = await this.$axios.post("api/getarticle", {
-  //         id: this.$route.params.id
-  //       });
-  //     }
-
-  //     this.$store.commit("changearticle", res.data.data);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // },
+  async fetch() {
+    try {
+      let res = await this.$axios.post("/v2/getArticle", {
+        id: this.$route.params.id
+      });
+      this.articleData = res.data.data;
+    } catch (e) {
+      console.error(e);
+    }
+  },
   // 还有问题
 
-  methods: {}
+  methods: {
+    changeArticle() {
+      this.$store.commit("setChangeArticleId", this.articleData._id);
+      this.$router.push("/admin");
+    }
+  }
 };
 </script>
 
@@ -129,5 +129,9 @@ export default {
 
 .md {
   z-index: 1;
+}
+.loding {
+  display: flex;
+  justify-content: center;
 }
 </style>

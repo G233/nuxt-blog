@@ -1,33 +1,43 @@
 <template>
   <div class="edit">
     <div class="edit-title">
-      <Input v-model="title" size="large" placeholder="请输入标题"></Input>
+      <Input
+        v-model="articleDate.title"
+        size="large"
+        placeholder="请输入标题"
+      ></Input>
     </div>
-    <div class="addlabel">
-      <Tag
-        v-for="item in label"
-        :key="item"
-        :name="item"
-        closable
-        @on-close="handleClose"
-        >{{ item }}</Tag
-      >
-      <Dropdown>
-        <Button type="primary">
-          添加标签
-          <Icon type="ios-arrow-down"></Icon>
-        </Button>
-        <DropdownMenu slot="list">
-          <div @click="handleAdd(item.name)" v-for="item in alllabel">
-            <DropdownItem>{{ item.name }}</DropdownItem>
-          </div>
-          <div @click="addlabel">
-            <DropdownItem divided>新建标签</DropdownItem>
-          </div>
-        </DropdownMenu>
-      </Dropdown>
-      <Button type="success" @click="commit">发表</Button>
-      <Button v-if="ishas" @click="modal = true" type="error">删除</Button>
+    <div class="btns">
+      <div>
+        <Tag
+          v-for="item in articleDate.labels"
+          :key="item"
+          :name="item"
+          closable
+          @on-close="handleClose"
+          >{{ item.name }}</Tag
+        >
+        <Dropdown>
+          <Button type="primary">
+            添加标签
+            <Icon type="ios-arrow-down"></Icon>
+          </Button>
+          <DropdownMenu slot="list">
+            <div @click="handleAdd(item)" v-for="item in alllabel">
+              <DropdownItem>{{ item.name }}</DropdownItem>
+            </div>
+            <div @click="addlabel">
+              <DropdownItem divided>新建标签</DropdownItem>
+            </div>
+          </DropdownMenu>
+        </Dropdown>
+        <Button type="success" @click="commit">发表</Button>
+        <Button v-if="ishas" @click="modal = true" type="error">删除</Button>
+      </div>
+      <div>
+        <!-- <Button class="nginx" @click="tonginx" type="primary">Nginx</Button> -->
+        <Button type="success" @click="initData">写作</Button>
+      </div>
     </div>
 
     <!-- <Row class-name="lan" type="flex" justify="space-around">
@@ -79,7 +89,7 @@
           <mavon-editor
             class="v-note-wrapper"
             :toolbars="toolbars"
-            v-model="content"
+            v-model="articleDate.content"
           />
         </div>
       </Col>
@@ -102,15 +112,17 @@ export default {
   components: {},
   data() {
     return {
-      // content:'',
-      // title:'',
-      // abstract:'',
-      newArticle: false,
+      articleDate: {
+        content: "",
+        title: "",
+        abstract: "",
+        labels: []
+      },
+
+      newArticle: true,
       alllabel: [],
       newlable: "",
-      label: [],
       modal: false,
-      img_file: [],
       toolbars: {
         link: true, // 链接
         imagelink: true, // 图片链接
@@ -130,73 +142,40 @@ export default {
         aligncenter: true, // 居中
         alignright: true // 右对齐
       },
-
-      switchs: true,
-      leiList: ""
+      switchs: true
+      // leiList: ""
     };
   },
   computed: {
-    add() {
-      return this.switchs ? "add" : "add add-r";
+    ChangeArticleId() {
+      return this.$store.state.ChangeArticleId;
     },
     ishas() {
       return this.$store.state.ishas;
     },
     atid() {
       return this.$store.state.atid;
-    },
-    content: {
-      get() {
-        return this.$store.state.content;
-      },
-      set(value) {
-        this.$store.commit("updatectt", value);
-      }
-    },
-    title: {
-      get() {
-        return this.$store.state.title;
-      },
-      set(value) {
-        this.$store.commit("updatettl", value);
-      }
-    },
-    abstract: {
-      get() {
-        return this.$store.state.abstract;
-      },
-      set(value) {
-        this.$store.commit("updateabstract", value);
-      }
-    },
-    lei: {
-      get() {
-        return this.$store.state.lei;
-      },
-      set(value) {
-        this.$store.commit("updatelei", value);
-      }
-    },
-    userId() {
-      return this.$store.state.userid;
-    },
-    btntext() {
-      if (this.ishas) {
-        return this.switchs ? "更改" : "添加";
-      } else {
-        return this.switchs ? "发表" : "添加";
-      }
-    },
-
-    editor() {
-      return this.$refs.myQuillEditor.quill;
+    }
+  },
+  async mounted() {
+    if (this.ChangeArticleId) {
+      let res = await this.$axios.post("/v2/getFallArticle", {
+        id: this.ChangeArticleId
+      });
+      this.newArticle = false;
+      this.articleDate = res.data.data;
     }
   },
   created() {
-    this.refresh();
+    // this.refresh();
     this.getAllLabel();
   },
   methods: {
+    initData() {
+      this.articleDate = this.$options.data().articleDate;
+      this.newArticle = true;
+      this.$Message.success("开始写作吧");
+    },
     addlabel() {
       this.$Modal.confirm({
         render: h => {
@@ -236,16 +215,17 @@ export default {
       this.$Modal.remove();
     },
     handleClose(event, name) {
-      const index = this.label.indexOf(name);
-      this.label.splice(index, 1);
+      const index = this.articleDate.labels.indexOf(name);
+      this.articleDate.labels.splice(index, 1);
     },
-    handleAdd(name) {
-      console.log(name);
-      if (this.label.indexOf(name) === -1) {
-        this.label.push(name);
-      } else {
-        this.$Message.warning("请不要重复选择标签");
+    handleAdd(item) {
+      for (let x of this.articleDate.labels) {
+        if (item._id === x._id) {
+          this.$Message.warning("请不要重复选择标签");
+          return;
+        }
       }
+      this.articleDate.labels.push(item);
     },
     async deleteat() {
       let res = await this.$axios.post("/deleteat", {
@@ -257,96 +237,30 @@ export default {
         this.refuselist();
       }
     },
-
-    refresh() {
-      this.$axios.post("/getlei", { userid: this.userId }).then(res => {
-        this.leiList = res.data.data;
-        //console.log(this.lei);
-        this.refuselist();
-      });
-    },
-
-    addlei() {
-      this.switchs = !this.switchs;
-      this.lei = "";
-    },
     async commit() {
-      if (!this.switchs) {
-        if (!this.lei) {
-          this.$Message.error("麻烦输入类别");
-        } else {
-          this.$axios
-            .post("/addlei", { lei: this.lei, userid: this.userId })
-            .then(res => {
-              if (res.data.code == 200) {
-                this.switchs = !this.switchs;
-                this.$Message.success("类别添加好了");
-                this.refuselist();
-              } else {
-                this.$Message.error(res.data.msg);
-              }
-            })
-            .catch(res => {
-              this.$Message.error("网络错误");
-            });
-        }
+      if (!this.articleDate.content) {
+        this.$Message.error("请输入文章内容");
+      } else if (!this.articleDate.title) {
+        this.$Message.error("请输入标题");
+      } else if (!this.articleDate.labels.length === 0) {
+        this.$Message.error("至少选择一个标签");
       } else {
-        if (!this.content) {
-          this.$Message.error("请输入文章内容");
-        } else if (!this.title) {
-          this.$Message.error("请输入标题");
+        let data = this.articleDate;
+        //判断更新还是新建
+        if (!this.newArticle) {
+          // 需要添加 id
+          let res = await this.$axios.post("/v2/updateArticle", data);
+          this.$Message.success(res.data.msg);
         } else {
-          let data = {
-            content: this.content,
-            title: this.title,
-            author: this.userId,
-            _id: this.atid,
-            abstract: this.abstract,
-            labels: this.label
-          };
-          //判断更新还是新建
-          if (!this.newArticle) {
-            // this.$axios
-            //   .post("/updatearticle", data)
-            //   .then(res => {
-            //     this.$Message.success(res.data.msg);
-            //     this.refuselist();
-            //   })
-            //   .catch();
-            let res = await this.$axios.post("/v2/updateArticle", data);
-            this.$Message.success(res.data.msg);
-          } else {
-            // this.$axios
-            //   .post("/newarticle", data)
-            //   .then(res => {
-            //     if (res.data.code == 201) {
-            //       this.$Message.error(res.data.msg);
-            //       return;
-            //     }
-            //     this.refuselist();
-            //     this.$Message.success(res.data.msg);
-            //     this.switchs = !this.switchs;  })
-            //   .catch();
-            let res = await this.$axios.post("/v2/addArticle", data);
-            if (res.data.code == 201) {
-              this.$Message.error(res.data.msg);
-              return;
-            }
-            // this.refuselist();
-            this.$Message.success(res.data.msg);
+          let res = await this.$axios.post("/v2/addArticle", data);
+          if (res.data.code == 201) {
+            this.$Message.error(res.data.msg);
+            return;
           }
+
+          this.$Message.success(res.data.msg);
         }
       }
-    },
-    refuselist() {
-      setTimeout(() => {
-        this.$axios
-          .post("/getlist")
-          .then(res => {
-            this.$store.commit("updatelist", res.data.data);
-          })
-          .catch();
-      }, 500);
     }
   }
 };
@@ -356,14 +270,14 @@ export default {
   margin: auto;
   width: 95%;
 }
-.abstract-text {
-  width: 50%;
-  margin: 0 auto;
-  margin-bottom: 60px;
-}
-.mavonEditor {
-  margin: auto;
-}
+// .abstract-text {
+//   width: 50%;
+//   margin: 0 auto;
+//   margin-bottom: 60px;
+// }
+// .mavonEditor {
+//   margin: auto;
+// }
 .v-note-wrapper {
   z-index: 0 !important;
   height: 85vh;
@@ -377,27 +291,28 @@ export default {
     font-size: 24px;
   }
 }
-.addlabel {
+// .add {
+//   color: #0288d1;
+//   cursor: pointer;
+//   transition: transform 0.2s ease;
+// }
+// .add:hover {
+//   color: #b3e5fc;
+// }
+// .add:active {
+//   color: #05a7ff;
+// }
+// .add-r {
+//   transform: rotate(45deg);
+// }
+// .lan {
+//   width: 470px;
+//   margin: auto;
+// }
+.btns {
+  display: flex;
+  justify-content: space-between;
   margin-top: 20px;
   margin-bottom: 20px;
-}
-
-.add {
-  color: #0288d1;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-.add:hover {
-  color: #b3e5fc;
-}
-.add:active {
-  color: #05a7ff;
-}
-.add-r {
-  transform: rotate(45deg);
-}
-.lan {
-  width: 470px;
-  margin: auto;
 }
 </style>

@@ -25,8 +25,13 @@ router
   .post("/api/addimg", Article.addimg)
   .post("/api/deleteat", Article.deleteat)
   .post("/api/getlists", Article.getlists)
+  .post("/api/v2/Login", User.Login)
   .post("/api/v2/addlabel", Article.addLabel)
   .post("/api/v2/getAllLabel", Article.getAllLabel)
   .post("/api/v2/updateArticle", Article.updateArticle)
+  .post("/api/v2/Recent", Article.Recent)
+  .post("/api/v2/getArticle", Article.getArticle)
+  .post("/api/v2/getFallArticle", Article.getFallArticle)
   .post("/api/v2/addArticle", Article.addArticle);
+
 module.exports = router;

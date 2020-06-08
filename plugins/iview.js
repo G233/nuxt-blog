@@ -22,6 +22,7 @@ import {
   DropdownItem,
   Dropdown,
   Tag,
+  Spin
 } from "view-design";
 Vue.component("Button", Button);
 Vue.component("Row", Row);
@@ -44,7 +45,8 @@ Vue.component("DropdownMenu", DropdownMenu);
 Vue.component("DropdownItem", DropdownItem);
 Vue.component("Dropdown", Dropdown);
 Vue.component("Tag", Tag);
-
+Vue.component("Spin", Spin);
 
 Vue.prototype.$Message = Message;
 Vue.prototype.$Modal = Modal;
+Vue.prototype.$Spin = Spin;

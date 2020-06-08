@@ -9,7 +9,8 @@ const onerror = require("koa-onerror");
 const session = require("koa-session");
 const logger = require("koa-logger");
 const koaBody = require("koa-body");
-
+const koa_jwt = require("koa-jwt");
+const verToken = require("./public/javascripts/token_verify.js");
 const app = new Koa();
 
 app.keys = ["liuxiaogu"];
@@ -99,8 +100,6 @@ app.use(
 app.use(koaBody());
 
 app.use(require("./middlewaers/response"));
-//session
-
 // routes
 app.use(api.routes(), api.allowedMethods());
 

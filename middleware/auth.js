@@ -1,5 +1,5 @@
 export default function({ store, redirect }) {
-  // if (!store.state.authUser) {
-  //   return redirect("/welcome");
-  // }
+  if (!store.state.authUser) {
+    return redirect("/welcome");
+  }
 }

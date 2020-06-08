@@ -17,20 +17,14 @@
 import Foote from "../components/front/foote";
 import Head from "../components/front/head";
 export default {
-  async asyncData({ $axios, app }) {
-    try {
-      let res;
-      if (process.server) {
-        res = await $axios.post("api/getlist");
-      } else {
-        res = await $axios.post("getlist");
-      }
-
-      app.store.commit("updatelist", res.data.data);
-    } catch (e) {
-      console.log(e);
-    }
-  },
+  // async asyncData({ $axios, app }) {
+  //   try {
+  //     let res = await $axios.post("getlist");
+  //     app.store.commit("updatelist", res.data.data);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // },
   components: {
     Head,
     Foote

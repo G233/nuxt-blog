@@ -6,12 +6,11 @@ const LabelModel = mongoose.model("Label");
 class ArticleService {
   // 储存新文章
   static async newArticle(data) {
-    const { content, title, userid, abstract, labels, aftercontent } = data;
+    const { content, title, abstract, labels, aftercontent } = data;
     return await ArticleModel.create({
       labels: labels,
       content: content,
       title: title,
-      author: userid,
       abstract: abstract,
       aftercontent: aftercontent
     });
@@ -25,8 +24,7 @@ class ArticleService {
   static async afterLaber(labels) {
     let Labels = [];
     for (let x of labels) {
-      let La = await LabelModel.findOne({ name: x });
-      Labels.push(La._id);
+      Labels.push(x._id);
     }
     return Labels;
   }
@@ -106,6 +104,9 @@ class ArticleService {
     } catch (e) {
       console.log(e);
     }
+  }
+  static async getArticle(id) {
+    return await ArticleModel.findById(id);
   }
 }
 module.exports = ArticleService;

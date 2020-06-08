@@ -18,14 +18,13 @@
       </div>
     </div>
     <div class="card">
-      <div v-for="(item, index) in list" :key="index">
+      <div v-for="(item, index) in recentArticle" :key="index">
         <LgCard :data="item"></LgCard>
       </div>
     </div>
     <Foote></Foote>
   </div>
 </template>
-
 <script>
 import Foote from "../components/front/foote";
 import Head from "../components/front/head";
@@ -37,35 +36,44 @@ export default {
     Foote,
     LgCard
   },
-  async asyncData({ $axios, app }) {
-    try {
-      let res1, res2;
-      let a;
-      if (process.server) {
-        [res1, res2] = await Promise.all([
-          $axios.post("api/getlist"),
-          $axios.post("api/recent")
-        ]);
-        app.store.commit("updatelist", res1.data.data);
-        return {
-          list: res2.data.data
-        };
-      } else {
-        if (app.store.state.isfirst) {
-          res2 = await $axios.post("/recent");
-          app.store.commit("tohome");
-          return {
-            list: res2.data.data
-          };
-        }
-      }
-    } catch (e) {
-      console.log(e);
+  // async asyncData({ $axios, app }) {
+  //   try {
+  //     let res1, res2;
+  //     let a;
+  //     if (process.server) {
+  //       [res1, res2] = await Promise.all([
+  //         $axios.post("api/getlist"),
+  //         $axios.post("api/recent")
+  //       ]);
+  //       app.store.commit("updatelist", res1.data.data);
+  //       return {
+  //         list: res2.data.data
+  //       };
+  //     } else {
+  //       if (app.store.state.isfirst) {
+  //         res2 = await $axios.post("/recent");
+  //         app.store.commit("tohome");
+  //         return {
+  //           list: res2.data.data
+  //         };
+  //       }
+  //     }
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // },
+  async fetch() {
+    const recentArticle = this.$store.state.recentArticle;
+    // 把 recent 数据缓存下来，避免从文章返回的时候重复加载
+    if (!recentArticle) {
+      let res = await this.$axios.post("/v2/Recent");
+      this.$store.commit("SET_RECENT", res.data.data);
+      this.recentArticle = res.data.data;
+    } else {
+      this.recentArticle = recentArticle;
     }
   },
-  async mounted() {
-    this.$store.commit("SET_FIRST");
-  },
+  async mounted() {},
   computed: {
     classify() {
       return this.$store.state.list;
@@ -74,7 +82,8 @@ export default {
 
   data() {
     return {
-      ishome: true
+      ishome: true,
+      recentArticle: false
     };
   },
   methods: {

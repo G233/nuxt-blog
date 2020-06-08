@@ -69,6 +69,7 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
+    "~/plugins/axios",
     { src: "@/plugins/iview" },
     { src: "@/plugins/vue-mavon-editor", mode: "client" },
     { src: "~/plugins/vue-lazyload.js", mode: "client" }
@@ -82,7 +83,7 @@ module.exports = {
   },
   axios: {
     // browserBaseURL: "https://www.liuxiaogu.com/api",
-    browserBaseURL: "http://localhost:3002/api",
+    baseURL: "http://localhost:3002/api"
     // proxyHeaders: false
     // credentials: true
   },
@@ -112,6 +113,6 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) { }
+    extend(config, ctx) {}
   }
 };

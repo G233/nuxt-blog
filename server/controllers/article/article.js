@@ -44,7 +44,7 @@ class Article {
       author: userid,
       abstract: abstract
     });
-    console.log(aa);
+
     Article.refuselist(userid);
     return ctx.success({ msg: "文章新建成功" });
   }
@@ -53,13 +53,11 @@ class Article {
     let alei = await LeiModel.findOne({ name: lei });
     try {
       if (abstract == null) {
-        console.log("正在添加摘要");
         abstract = content.replace(/#/g, "").replace(/\*/g, "");
       }
     } catch (e) {}
     try {
       if (abstract.length < 50) {
-        console.log("正在添加摘要");
         abstract = content.replace(/#/g, "").replace(/\*/g, "");
       }
     } catch (e) {}
@@ -178,5 +176,35 @@ class Article {
     let labels = await ArticleService.getAllLabel();
     return ctx.success({ data: labels });
   }
+  static async Recent(ctx) {
+    let data = await ArticleModel.find().sort({ createdAt: -1 });
+    data = data.slice(0, 5);
+    let recentArticle = [];
+    for (let x of data) {
+      let X = {
+        _id: x._id,
+        abstract: x.abstract,
+        createdAt: x.createdAt,
+        labels: x.labels,
+        title: x.title
+      };
+      recentArticle.push(X);
+    }
+    return ctx.success({ data: recentArticle });
+  }
+  static async getArticle(ctx) {
+    let { id } = ctx.request.body;
+    const article = await ArticleService.getArticle(id);
+    delete article.content;
+    return ctx.success({ data: article });
+  }
+  static async getFallArticle(ctx) {
+    let { id } = ctx.request.body;
+    const article = await ArticleService.getArticle(id);
+    let labels = [];
+
+    return ctx.success({ data: article });
+  }
 }
+
 module.exports = Article;

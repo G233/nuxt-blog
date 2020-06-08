@@ -4,7 +4,26 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  created() {
+    if (!process.server) {
+      let token = null;
+      try {
+        token = localStorage.getItem("token");
+        this.$store.commit("SET_USER", token);
+      } catch (e) {
+        console.log(e);
+      }
+
+      // this.$axios
+      //   .post("/index")
+      //   .then(res => {
+      //     this.$store.commit("setUserId", res.data.data.userid);
+      //   })
+      //   .catch();
+    }
+  }
+};
 </script>
 <style>
 html {

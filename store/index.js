@@ -5,7 +5,7 @@ import xml from "highlight.js/lib/languages/xml";
 export const state = () => ({
   isfirst: true,
   showpage: false,
-  // authUser: false,
+  authUser: false,
   counter: 0,
   userid: null,
   content: "",
@@ -16,15 +16,23 @@ export const state = () => ({
   date: "",
   ishas: false,
   LeiList: "",
-  abstract: ""
+  abstract: "",
+  recentArticle: false,
+  ChangeArticleId: false
 });
 
 export const mutations = {
+  setChangeArticleId(state, data) {
+    state.ChangeArticleId = data;
+  },
+  SET_RECENT(state, data) {
+    state.recentArticle = data;
+  },
   SET_FIRST(state) {
     state.isfirst = false;
   },
-  SET_USER(state, user) {
-    state.authUser = user;
+  SET_USER(state, userid) {
+    state.authUser = userid;
   },
   tohome(state, user) {
     state.isfirst = false;
@@ -67,11 +75,11 @@ export const mutations = {
         html: true,
         linkify: true,
         typographer: true,
-        highlight: function (str, lang) {
+        highlight: function(str, lang) {
           if (lang && hljs.getLanguage(lang)) {
             try {
               return hljs.highlight(lang, str).value;
-            } catch (__) { }
+            } catch (__) {}
           }
           return ""; // 使用额外的默认转义
         }
@@ -96,9 +104,9 @@ export const mutations = {
 export const actions = {
   // nuxtServerInit is called by Nuxt.js before server-rendering every page
   // nuxtServerInit({ commit }, { req }) {
-  //   // if (req.session && req.session.userid) {
-  //   //   commit('SET_USER', req.session.userid)
-  //   // }
+  //   if (localStorage.getItem("token")) {
+  //     commit("SET_USER", req.session.userid);
+  //   }
   // },
   async getarticle({ commit }, { id }) {
     try {
@@ -106,6 +114,6 @@ export const actions = {
         id: id
       });
       commit("changearticle", res.data.data);
-    } catch (e) { }
+    } catch (e) {}
   }
 };
