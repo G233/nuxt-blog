@@ -105,7 +105,7 @@ export default {
       // content:'',
       // title:'',
       // abstract:'',
-      newArticle: true,
+      newArticle: false,
       alllabel: [],
       newlable: "",
       label: [],
@@ -300,7 +300,7 @@ export default {
             content: this.content,
             title: this.title,
             author: this.userId,
-            atid: this.atid,
+            _id: this.atid,
             abstract: this.abstract,
             labels: this.label
           };

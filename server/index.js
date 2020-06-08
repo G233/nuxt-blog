@@ -79,23 +79,23 @@ app.use(
     allowHeaders: ["Content-Type", "Authorization", "Accept", "multipart"]
   })
 );
-app.use(
-  session(
-    {
-      key: "lxg",
-      overwrite: true, //覆写Cookie
-      httpOnly: false, //不允许通过 JS 来更改
-      renew: true, //会话快到期时续订，可以保持用户一直登陆a
-      store: new MongooseStore({
-        createIndexes: "appSessions",
-        connection: mongoose,
-        expires: 86400, // 默认一天
-        name: "AppSession"
-      }) //传入一个用于session的外部储存，我这里是使用了 mongodb
-    },
-    app
-  )
-);
+// app.use(
+//   session(
+//     {
+//       key: "lxg",
+//       overwrite: true, //覆写Cookie
+//       httpOnly: false, //不允许通过 JS 来更改
+//       renew: true, //会话快到期时续订，可以保持用户一直登陆a
+//       store: new MongooseStore({
+//         createIndexes: "appSessions",
+//         connection: mongoose,
+//         expires: 86400, // 默认一天
+//         name: "AppSession"
+//       }) //传入一个用于session的外部储存，我这里是使用了 mongodb
+//     },
+//     app
+//   )
+// );
 app.use(koaBody());
 
 app.use(require("./middlewaers/response"));

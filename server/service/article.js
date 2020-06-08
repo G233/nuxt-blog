@@ -5,7 +5,7 @@ const LeiModel = mongoose.model("Lei");
 const LabelModel = mongoose.model("Label");
 class ArticleService {
   // 储存新文章
-  static async saveArticle(data) {
+  static async newArticle(data) {
     const { content, title, userid, abstract, labels, aftercontent } = data;
     return await ArticleModel.create({
       labels: labels,
@@ -59,7 +59,9 @@ class ArticleService {
     // 添加图片懒加载所需字段
     return md.render(html).replace(/src/g, "data-src");
   }
-  static async updateArticle(data) {}
+  static async updateArticle(data) {
+    return await ArticleModel.findByIdAndUpdate(data._id, data);
+  }
   static async addLabel(name) {
     if (await this.hasLabel(name)) {
       return {
@@ -104,9 +106,6 @@ class ArticleService {
     } catch (e) {
       console.log(e);
     }
-  }
-  static async updateArticle(data) {
-    await ArticleModel.findByIdAndUpdate({ _id: data.atid }, { data });
   }
 }
 module.exports = ArticleService;

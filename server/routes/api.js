@@ -27,8 +27,6 @@ router
   .post("/api/getlists", Article.getlists)
   .post("/api/v2/addlabel", Article.addLabel)
   .post("/api/v2/getAllLabel", Article.getAllLabel)
+  .post("/api/v2/updateArticle", Article.updateArticle)
   .post("/api/v2/addArticle", Article.addArticle);
-
-//aaaa
-
 module.exports = router;

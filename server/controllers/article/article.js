@@ -147,11 +147,13 @@ class Article {
       articleData.content
     );
 
-    await ArticleService.saveArticle(articleData);
+    await ArticleService.newArticle(articleData);
 
     return ctx.success({ msg: "文章发表好了" });
   }
+  // 暂未测试
   static async updateArticle(ctx) {
+    let articleData = ctx.request.body;
     // 将标签名转换为 ID
     articleData.labels = await ArticleService.afterLaber(articleData.labels);
     // 添加摘要
@@ -163,7 +165,9 @@ class Article {
       articleData.content
     );
 
-    await ArticleService.saveArticle(articleData);
+    await ArticleService.updateArticle(articleData);
+
+    return ctx.success({ msg: "文章更新好了" });
   }
   static async addLabel(ctx) {
     let { name } = ctx.request.body;
