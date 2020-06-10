@@ -108,5 +108,25 @@ class ArticleService {
   static async getArticle(id) {
     return await ArticleModel.findById(id);
   }
+  static async getRecent() {
+    let data = await ArticleModel.find().sort({ createdAt: -1 });
+    data = data.slice(0, 5);
+    let recentArticle = [];
+    for (let x of data) {
+      let X = {
+        _id: x._id,
+        abstract: x.abstract,
+        createdAt: x.createdAt,
+        labels: x.labels,
+        title: x.title
+      };
+      recentArticle.push(X);
+    }
+    return recentArticle;
+  }
+  static async getLableArtivle(id) {
+    let res = await ArticleModel.find({ labels: id });
+    return res;
+  }
 }
 module.exports = ArticleService;

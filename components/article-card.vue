@@ -2,6 +2,15 @@
   <div>
     <div class="card">
       <div class="cardt" @click="topage" :id="data._id">{{ data.title }}</div>
+      <div class="tag">
+        <Tag
+          @click.native="tolabel(item)"
+          v-for="item in data.labels"
+          :key="item._id"
+          :name="item.name"
+          >{{ item.name }}</Tag
+        >
+      </div>
       <div class="cardc">{{ data.abstract }}</div>
       <Row type="flex" align="bottom" style="margin-top:15px;">
         <Col span="12">
@@ -19,6 +28,13 @@
 export default {
   props: ["data"],
   methods: {
+    tolabel(e) {
+      console.log(e);
+      this.$router.push({
+        name: "home-list-id",
+        params: { id: e._id }
+      });
+    },
     topage() {
       try {
         this.$router.push({
@@ -45,7 +61,6 @@ export default {
 .cardt {
   font-size: 19px;
   font-weight: bold;
-  padding-bottom: 10px;
   transition: color 0.2s;
   cursor: pointer;
   text-align: start;
@@ -66,5 +81,10 @@ export default {
   font-weight: 700;
   font-size: 13px;
   color: #808695;
+}
+.tag {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  cursor: pointer;
 }
 </style>

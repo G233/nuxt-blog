@@ -32,6 +32,7 @@ router
   .post("/api/v2/Recent", Article.Recent)
   .post("/api/v2/getArticle", Article.getArticle)
   .post("/api/v2/getFallArticle", Article.getFallArticle)
+  .post("/api/v2/getLableArtivle", Article.getLableArtivle)
   .post("/api/v2/addArticle", Article.addArticle);
 
 module.exports = router;

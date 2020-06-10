@@ -64,9 +64,6 @@ export default {
     authUser() {
       return this.$store.state.authUser;
     },
-    showpage() {
-      return this.$store.state.showpage;
-    },
     prop() {
       let data = {};
       return data;

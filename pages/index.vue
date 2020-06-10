@@ -9,9 +9,9 @@
         <div
           class="lei-text"
           v-for="(item, index1) in classify"
-          :key="index1"
-          @click="tolist"
-          :id="item._id"
+          :key="item.id"
+          @click="tolist(item)"
+          :id="item.id"
         >
           {{ item.name }}
         </div>
@@ -28,7 +28,7 @@
 <script>
 import Foote from "../components/front/foote";
 import Head from "../components/front/head";
-import LgCard from "../components/lgcard";
+import LgCard from "../components/article-card";
 
 export default {
   components: {
@@ -36,32 +36,6 @@ export default {
     Foote,
     LgCard
   },
-  // async asyncData({ $axios, app }) {
-  //   try {
-  //     let res1, res2;
-  //     let a;
-  //     if (process.server) {
-  //       [res1, res2] = await Promise.all([
-  //         $axios.post("api/getlist"),
-  //         $axios.post("api/recent")
-  //       ]);
-  //       app.store.commit("updatelist", res1.data.data);
-  //       return {
-  //         list: res2.data.data
-  //       };
-  //     } else {
-  //       if (app.store.state.isfirst) {
-  //         res2 = await $axios.post("/recent");
-  //         app.store.commit("tohome");
-  //         return {
-  //           list: res2.data.data
-  //         };
-  //       }
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // },
   async fetch() {
     const recentArticle = this.$store.state.recentArticle;
     // 把 recent 数据缓存下来，避免从文章返回的时候重复加载
@@ -87,20 +61,12 @@ export default {
     };
   },
   methods: {
-    tolist(e) {
-      this.$router.push({
-        name: "home-list-id",
-        params: { id: e.target.id, name: e.target.textContent }
-      });
-    },
-    toact(e) {
-      console, log("开始跳转");
-      this.$router.push({
-        name: "home-article-name",
-        params: {
-          name: e.path[0].id
-        }
-      });
+    tolist(item) {
+      if (item.openURL) {
+        window.open(item.url);
+      } else {
+        this.$router.push(item.url);
+      }
     }
   }
 };

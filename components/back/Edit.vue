@@ -11,8 +11,8 @@
       <div>
         <Tag
           v-for="item in articleDate.labels"
-          :key="item"
-          :name="item"
+          :key="item._id"
+          :name="item.name"
           closable
           @on-close="handleClose"
           >{{ item.name }}</Tag
@@ -31,7 +31,7 @@
             </div>
           </DropdownMenu>
         </Dropdown>
-        <Button type="success" @click="commit">发表</Button>
+        <Button type="success" @click="commit">{{ commitText }}</Button>
         <Button v-if="ishas" @click="modal = true" type="error">删除</Button>
       </div>
       <div>
@@ -39,50 +39,6 @@
         <Button type="success" @click="initData">写作</Button>
       </div>
     </div>
-
-    <!-- <Row class-name="lan" type="flex" justify="space-around">
-        <Col span="">
-          <Input
-            v-if="!switchs"
-            v-model="lei"
-            placeholder="请输入新建类别"
-            style="width: 200px"
-          />
-          <Select
-            v-else
-            v-model="lei"
-            clearable
-            style="width:200px"
-            @on-open-change="refresh"
-          >
-            <Option
-              v-for="item in leiList"
-              :key="item._id"
-              :value="item.name"
-              >{{ item.name }}</Option
-            >
-          </Select>
-        </Col>
-        <Col>
-          <Icon type="md-add" size="25" :class="add" @click="addlei" />
-        </Col>
-        <Col>
-          <Button type="primary" @click="commit">{{ btntext }}</Button>
-        </Col>
-        <Col>
-          <Button v-if="ishas" @click="modal = true" type="error">删除</Button>
-        </Col>
-      </Row> -->
-
-    <!-- <div class="abstract-text">
-      <Input
-        v-model="abstract"
-        type="textarea"
-        :rows="10"
-        placeholder="这里输入摘要"
-      />
-    </div> -->
-
     <Row>
       <Col>
         <div class="mavonEditor">
@@ -147,6 +103,9 @@ export default {
     };
   },
   computed: {
+    commitText() {
+      return this.newArticle ? "发表" : "更改";
+    },
     ChangeArticleId() {
       return this.$store.state.ChangeArticleId;
     },

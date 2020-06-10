@@ -6,6 +6,7 @@ const LeiModel = mongoose.model("Lei");
 const ArticleService = require("../../service/article");
 
 class Article {
+  static recent = "";
   static async addlei(ctx) {
     let { lei, userid } = ctx.request.body;
     let haslei = await LeiModel.findOne({ name: lei, userid: userid });
@@ -146,6 +147,7 @@ class Article {
     );
 
     await ArticleService.newArticle(articleData);
+    this.refuseRecent();
 
     return ctx.success({ msg: "文章发表好了" });
   }
@@ -164,6 +166,7 @@ class Article {
     );
 
     await ArticleService.updateArticle(articleData);
+    this.refuseRecent();
 
     return ctx.success({ msg: "文章更新好了" });
   }
@@ -177,20 +180,17 @@ class Article {
     return ctx.success({ data: labels });
   }
   static async Recent(ctx) {
-    let data = await ArticleModel.find().sort({ createdAt: -1 });
-    data = data.slice(0, 5);
-    let recentArticle = [];
-    for (let x of data) {
-      let X = {
-        _id: x._id,
-        abstract: x.abstract,
-        createdAt: x.createdAt,
-        labels: x.labels,
-        title: x.title
-      };
-      recentArticle.push(X);
+    if (Article.recent.length) {
+      return ctx.success({ data: Article.recent });
     }
+    const recentArticle = await ArticleService.getRecent();
+    // 还得写刷新函数
+    Article.recent = recentArticle;
     return ctx.success({ data: recentArticle });
+  }
+  static async refuseRecent() {
+    const recentArticle = await ArticleService.getRecent();
+    Article.recent = recentArticle;
   }
   static async getArticle(ctx) {
     let { id } = ctx.request.body;
@@ -202,8 +202,12 @@ class Article {
     let { id } = ctx.request.body;
     const article = await ArticleService.getArticle(id);
     let labels = [];
-
     return ctx.success({ data: article });
+  }
+  static async getLableArtivle(ctx) {
+    let { id } = ctx.request.body;
+    const articles = await ArticleService.getLableArtivle(id);
+    return ctx.success({ data: articles });
   }
 }
 

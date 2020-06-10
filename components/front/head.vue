@@ -18,16 +18,13 @@
       </div>
     </div>
     <div class="head-component-max">
-      <div class="lei-list">
-        <nuxt-link to="/" style="margin-left:80px" class="lei-text">
-          主页
-        </nuxt-link>
+      <div style="margin-left:80px" class="lei-list">
         <div
           class="lei-text"
           v-for="(item, index1) in list"
           :key="index1"
-          @click="tolist"
-          :id="item._id"
+          @click="tolist(item)"
+          :id="item.id"
         >
           {{ item.name }}
         </div>
@@ -39,7 +36,10 @@
 <script>
 export default {
   data() {
-    return { iscl: true, showMore: false };
+    return {
+      iscl: true,
+      showMore: false
+    };
   },
   computed: {
     list() {
@@ -68,12 +68,13 @@ export default {
     tohome() {
       this.$router.push("/home");
     },
-    tolist(e) {
+    tolist(item) {
       this.showMore = false;
-      this.$router.push({
-        name: "home-list-id",
-        params: { id: e.target.id, name: e.target.textContent }
-      });
+      if (item.openURL) {
+        window.open(item.url);
+      } else {
+        this.$router.push(item.url);
+      }
     }
   }
 };
