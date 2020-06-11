@@ -3,14 +3,12 @@ module.exports = {
     async routes(callback) {
       const axios = require("axios");
       let res = await axios.post(
-        "https://www.liuxiaogu.com/v2/api/getAllLabel"
+        "https://www.liuxiaogu.com/api/v2/getAllLabel"
       );
       const routes1 = res.data.data.map(lei => {
         return "/home/list/" + lei._id;
       });
-      let res2 = await axios.post(
-        "https://www.liuxiaogu.com/v2/api/getallartc"
-      );
+      let res2 = await axios.post("https://www.liuxiaogu.com/api/getallartc");
       const routes2 = res2.data.data.map(artc => {
         return "/home/article/" + artc._id;
       });
@@ -86,11 +84,11 @@ module.exports = {
     scss: "./assets/index.scss"
   },
   axios: {
-    baseURL:
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3002/api/v2"
-        : "https://www.liuxiaogu.com/v2"
-    // baseURL: "http://localhost:3002/api"
+    // baseURL:
+    // process.env.NODE_ENV === "development"
+    //   ? "http://localhost:3002/api/v2"
+    //   : "https://www.liuxiaogu.com/api/v2"
+    baseURL: "https://www.liuxiaogu.com/v2"
     // proxyHeaders: false
     // credentials: true
   },
