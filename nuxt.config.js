@@ -2,11 +2,15 @@ module.exports = {
   generate: {
     async routes(callback) {
       const axios = require("axios");
-      let res = await axios.post("http://localhost:3002/api/getAllLabel");
+      let res = await axios.post(
+        "https://www.liuxiaogu.com/v2/api/getAllLabel"
+      );
       const routes1 = res.data.data.map(lei => {
         return "/home/list/" + lei._id;
       });
-      let res2 = await axios.post("http://localhost:3002/api/getallartc");
+      let res2 = await axios.post(
+        "https://www.liuxiaogu.com/v2/api/getallartc"
+      );
       const routes2 = res2.data.data.map(artc => {
         return "/home/article/" + artc._id;
       });
