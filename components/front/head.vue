@@ -10,8 +10,8 @@
           class="home-list-text"
           v-for="(item, index1) in list"
           :key="index1"
-          @click="tolist"
-          :id="item._id"
+          @click="tolist(item)"
+          :id="item.id"
         >
           {{ item.name }}
         </div>

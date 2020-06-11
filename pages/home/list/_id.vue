@@ -9,26 +9,6 @@
 <script>
 import LgCard from "../../../components/article-card";
 export default {
-  // async asyncData({ $axios, store, params }) {
-  //   let res;
-  //   if (process.server) {
-  //     let res = await $axios.post("api/getlists", {
-  //       id: params.id
-  //     });
-  //     return {
-  //       list: res.data.data,
-  //       name: res.data.msg
-  //     };
-  //   } else {
-  //     let res = await $axios.post("/getlists", {
-  //       id: params.id
-  //     });
-  //     return {
-  //       list: res.data.data,
-  //       name: res.data.msg
-  //     };
-  //   }
-  // },
   watch: {
     "$route.query": "$fetch"
   },

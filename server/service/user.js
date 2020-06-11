@@ -21,7 +21,6 @@ class UserServise {
       email: email,
       passwd: md(passwd)
     });
-    console.log(hasuser);
     let data;
     if (hasuser) {
       data = {

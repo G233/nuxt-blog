@@ -11,7 +11,13 @@ export const state = () => ({
       url: "https://github.com/G233",
       openURL: true
     },
-    { name: "简历", id: 5, url: "/label", openURL: false }
+    {
+      name: "简历",
+      id: 5,
+      url:
+        "https://img-1257163508.cos.ap-chengdu.myqcloud.com/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E5%AE%9E%E4%B9%A0%E7%94%9F_%E5%88%98%E5%9B%BA.pdf",
+      openURL: true
+    }
   ]
 });
 

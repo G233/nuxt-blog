@@ -35,7 +35,6 @@ class ArticleService {
       .replace(/\*/g, "")
       .replace(/\s/g, "")
       .slice(0, 400);
-    console.log(abstract);
     return abstract;
   }
 

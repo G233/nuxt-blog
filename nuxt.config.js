@@ -2,7 +2,7 @@ module.exports = {
   generate: {
     async routes(callback) {
       const axios = require("axios");
-      let res = await axios.post("http://localhost:3002/api/getlei");
+      let res = await axios.post("http://localhost:3002/api/v2/getAllLabel");
       const routes1 = res.data.data.map(lei => {
         return "/home/list/" + lei._id;
       });
@@ -82,8 +82,11 @@ module.exports = {
     scss: "./assets/index.scss"
   },
   axios: {
-    // browserBaseURL: "https://www.liuxiaogu.com/api",
-    baseURL: "http://localhost:3002/api"
+    baseURL:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3002/api"
+        : "https://www.liuxiaogu.com/api"
+    // baseURL: "http://localhost:3002/api"
     // proxyHeaders: false
     // credentials: true
   },
@@ -92,6 +95,7 @@ module.exports = {
    */
   build: {
     transpile: [/view-design/],
+    extractCSS: true, // 提取 CSS
     // analyze: true,
     // cache: true,
     postcss: [

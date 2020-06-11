@@ -4,9 +4,8 @@ const UserModel = mongoose.model("User");
 const ArticleModel = mongoose.model("Article");
 const LeiModel = mongoose.model("Lei");
 const ArticleService = require("../../service/article");
-
+let recent = "";
 class Article {
-  static recent = "";
   static async addlei(ctx) {
     let { lei, userid } = ctx.request.body;
     let haslei = await LeiModel.findOne({ name: lei, userid: userid });
@@ -147,7 +146,7 @@ class Article {
     );
 
     await ArticleService.newArticle(articleData);
-    this.refuseRecent();
+    Article.refuseRecent();
 
     return ctx.success({ msg: "文章发表好了" });
   }
@@ -166,7 +165,7 @@ class Article {
     );
 
     await ArticleService.updateArticle(articleData);
-    this.refuseRecent();
+    Article.refuseRecent();
 
     return ctx.success({ msg: "文章更新好了" });
   }
@@ -180,17 +179,17 @@ class Article {
     return ctx.success({ data: labels });
   }
   static async Recent(ctx) {
-    if (Article.recent.length) {
-      return ctx.success({ data: Article.recent });
+    if (recent.length) {
+      return ctx.success({ data: recent });
     }
     const recentArticle = await ArticleService.getRecent();
     // 还得写刷新函数
-    Article.recent = recentArticle;
+    recent = recentArticle;
     return ctx.success({ data: recentArticle });
   }
   static async refuseRecent() {
     const recentArticle = await ArticleService.getRecent();
-    Article.recent = recentArticle;
+    recent = recentArticle;
   }
   static async getArticle(ctx) {
     let { id } = ctx.request.body;
