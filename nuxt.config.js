@@ -2,7 +2,7 @@ module.exports = {
   generate: {
     async routes(callback) {
       const axios = require("axios");
-      let res = await axios.post("http://localhost:3002/api/v2/getAllLabel");
+      let res = await axios.post("http://localhost:3002/api/getAllLabel");
       const routes1 = res.data.data.map(lei => {
         return "/home/list/" + lei._id;
       });
@@ -84,8 +84,8 @@ module.exports = {
   axios: {
     baseURL:
       process.env.NODE_ENV === "development"
-        ? "http://localhost:3002/api"
-        : "https://www.liuxiaogu.com/api"
+        ? "http://localhost:3002/api/v2"
+        : "https://www.liuxiaogu.com/v2"
     // baseURL: "http://localhost:3002/api"
     // proxyHeaders: false
     // credentials: true

@@ -71,7 +71,7 @@ export default {
           //   passwd: this.formCustom.passwd,
           //     email: this.formCustom.mail
           // })
-          this.$axios.post("/v2/Login", data).then(res => {
+          this.$axios.post("/Login", data).then(res => {
             if (res.data.code == 201) {
               this.$Message.error("邮箱或密码错误");
             } else {

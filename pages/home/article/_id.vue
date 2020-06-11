@@ -76,14 +76,14 @@ export default {
     // 预加载 recent 数据
     const recentArticle = this.$store.state.recentArticle;
     if (!recentArticle) {
-      let res = this.$axios.post("/v2/Recent").then(res => {
+      let res = this.$axios.post("/Recent").then(res => {
         this.$store.commit("SET_RECENT", res.data.data);
       });
     }
   },
   async fetch() {
     try {
-      let res = await this.$axios.post("/v2/getArticle", {
+      let res = await this.$axios.post("/getArticle", {
         id: this.$route.params.id
       });
       this.articleData = res.data.data;

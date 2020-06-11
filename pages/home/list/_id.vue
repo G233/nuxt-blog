@@ -15,7 +15,7 @@ export default {
   async fetch() {
     try {
       console.log("aaaaa");
-      let res = await this.$axios.post("/v2/getLableArtivle", {
+      let res = await this.$axios.post("/getLableArtivle", {
         id: this.id
       });
       this.articles = res.data.data;

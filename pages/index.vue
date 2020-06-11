@@ -40,7 +40,7 @@ export default {
     const recentArticle = this.$store.state.recentArticle;
     // 把 recent 数据缓存下来，避免从文章返回的时候重复加载
     if (!recentArticle) {
-      let res = await this.$axios.post("/v2/Recent");
+      let res = await this.$axios.post("/Recent");
       this.$store.commit("SET_RECENT", res.data.data);
       this.recentArticle = res.data.data;
     } else {

@@ -208,6 +208,16 @@ class Article {
     const articles = await ArticleService.getLableArtivle(id);
     return ctx.success({ data: articles });
   }
+  static async deleteLabel(ctx) {
+    let { id } = ctx.request.body;
+    let hasArticle = await ArticleService.getLableArtivle(id);
+    if (hasArticle.length > 0) {
+      return ctx.error({ msg: "已有文章的标签不能删除，请删除文章后重试" });
+    } else {
+      await ArticleService.deleteLabel(id);
+    }
+    return ctx.success({ msg: "删除成功" });
+  }
 }
 
 module.exports = Article;

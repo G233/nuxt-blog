@@ -127,5 +127,8 @@ class ArticleService {
     let res = await ArticleModel.find({ labels: id });
     return res;
   }
+  static async deleteLabel(id) {
+    return await LabelModel.findByIdAndDelete(id);
+  }
 }
 module.exports = ArticleService;

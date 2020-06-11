@@ -118,7 +118,7 @@ export default {
   },
   async mounted() {
     if (this.ChangeArticleId) {
-      let res = await this.$axios.post("/v2/getFallArticle", {
+      let res = await this.$axios.post("/getFallArticle", {
         id: this.ChangeArticleId
       });
       this.newArticle = false;
@@ -158,13 +158,13 @@ export default {
       });
     },
     async getAllLabel() {
-      let res = await this.$axios.post("/v2/getAllLabel");
+      let res = await this.$axios.post("/getAllLabel");
       console.log(res);
       this.alllabel = res.data.data;
       return;
     },
     async addnewlabel() {
-      let res = await this.$axios.post("/v2/addlabel", { name: this.newlable });
+      let res = await this.$axios.post("/addlabel", { name: this.newlable });
       if (res.data.code === 201) {
         this.$Message.error(res.data.msg);
       } else {
@@ -208,10 +208,10 @@ export default {
         //判断更新还是新建
         if (!this.newArticle) {
           // 需要添加 id
-          let res = await this.$axios.post("/v2/updateArticle", data);
+          let res = await this.$axios.post("/updateArticle", data);
           this.$Message.success(res.data.msg);
         } else {
-          let res = await this.$axios.post("/v2/addArticle", data);
+          let res = await this.$axios.post("/addArticle", data);
           if (res.data.code == 201) {
             this.$Message.error(res.data.msg);
             return;
